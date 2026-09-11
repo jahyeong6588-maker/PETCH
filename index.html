@@ -115,7 +115,9 @@
   .loc-pill{display:flex;align-items:center;gap:4px;background:none;border:none;color:var(--muted);font-size:12px;padding:6px 2px;max-width:min(26vw,110px);min-width:0;}
   .loc-pill svg{flex:none;color:var(--accent);}
   .loc-pill span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
-  .login-btn{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px clamp(10px,3.5vw,18px);font-weight:700;font-size:13px;white-space:nowrap;flex:none;}
+  .login-btn{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px clamp(10px,3.5vw,18px);font-weight:700;font-size:13px;white-space:nowrap;flex:none;max-width:120px;overflow:hidden;text-overflow:ellipsis;}
+  .login-btn.logged-in{background:var(--accent);color:#06210f;}
+  .admin-btn{background:var(--cream);color:var(--cream-ink);border:none;border-radius:999px;padding:10px 12px;font-weight:800;font-size:12px;white-space:nowrap;}
   .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;flex:none;}
   @media (max-width:360px){
     .brand-tag{display:none;}
@@ -241,10 +243,21 @@
   .card-phone{font-size:12.5px;color:var(--muted);margin-top:2px;}
   .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
   .mini-tag{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:4px 9px;}
+  .source-row{display:flex;align-items:center;gap:6px;margin-top:9px;}
+  .source-badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:5px 9px;font-size:10.5px;font-weight:900;letter-spacing:-0.01em;}
+  .source-badge.verified{background:var(--accent);color:#06210f;}
+  .source-badge.public{background:#e5e7eb;color:#5f6870;}
+  :root[data-theme="dark"] .source-badge.public{background:#343a37;color:#c0c7c3;}
   .card-actions{display:flex;gap:8px;margin-top:14px;}
   .card-actions a,.card-actions button{flex:1;text-align:center;border-radius:12px;padding:12px 10px;font-weight:800;font-size:12.5px;border:none;text-decoration:none;}
   .btn-dark{background:var(--ink);color:var(--bg);}
   .btn-outline{background:var(--surface);border:1px solid var(--line) !important;color:var(--ink);}
+
+  .vote-row{display:flex;gap:8px;margin-top:10px;}
+  .vote-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;font-weight:800;font-size:12.5px;color:var(--ink);}
+  .vote-btn.voted{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);}
+  .vote-btn:disabled{opacity:0.55;}
+  .vote-count{font-variant-numeric:tabular-nums;}
 
   .report-panel{margin-top:10px;padding-top:12px;border-top:1px dashed var(--line);}
   .report-label{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 8px;}
@@ -252,6 +265,22 @@
   .report-tag-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:11.5px;font-weight:700;}
   .report-tag-btn:active{background:var(--accent-soft);border-color:var(--accent);}
   .report-counts{font-size:11.5px;color:var(--muted);margin-top:8px;min-height:1.4em;}
+
+  .login-modal{max-width:360px;}
+  .login-desc{font-size:13.5px;color:var(--muted);margin:2px 0 0;line-height:1.5;}
+  .login-demo-note{margin:8px 0 18px;}
+  .login-input{width:100%;}
+  .auth-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:18px;}
+  .auth-actions .cta{margin-top:0;padding:14px 10px;}
+  .secondary-btn{background:var(--surface-soft);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 10px;font-weight:800;}
+  .admin-modal{max-width:430px;}
+  .admin-form{display:flex;flex-direction:column;gap:14px;margin-top:16px;}
+  .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .admin-grid .wide{grid-column:1 / -1;}
+  .admin-checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--surface-soft);padding:14px;border-radius:14px;}
+  .admin-checks label{font-size:12px;display:flex;align-items:center;gap:7px;}
+  .admin-checks input{width:18px;height:18px;accent-color:var(--accent);}
+  .admin-note{font-size:12px;color:var(--muted);margin:0;}
 
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:700;box-shadow:var(--shadow);z-index:200;opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
@@ -277,6 +306,7 @@
         <span id="locLabel">서울 성동구 성수동</span>
       </button>
       <button class="login-btn" id="loginBtn">로그인</button>
+      <button class="admin-btn" id="adminAddBtn" hidden>가게 추가</button>
       <button class="icon-btn" id="favShortcutBtn" aria-label="즐겨찾기 목록">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 17.3 6.2 21l1.5-6.5L2.5 9.9l6.7-.6L12 3l2.8 6.3 6.7.6-5.2 4.6L18 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
       </button>
@@ -288,7 +318,7 @@
   <section class="hero">
     <div class="hero-kicker">우리 아이와 외식은 <span class="badge">PETCH</span></div>
     <h1 class="hero-h1">오늘도 반려동반 맛집 추천</h1>
-    <p class="hero-sub">리뷰 태그 데이터로 찾는 우리 동네 반려동반 식당·카페</p>
+    <p class="hero-sub">공공데이터와 PETCH 직접 확인 정보로 찾는 반려동반 식당·카페</p>
 
     <div class="chip-row">
       <button class="chip" type="button" data-quick="fav">⭐ 나의 즐겨찾기</button>
@@ -329,7 +359,7 @@
         <p class="near-me-coords" id="nearMeCoords" hidden></p>
       </div>
 
-      <p class="hint">식품안전나라에 등록된 반려동물 동반출입 음식점 데이터를 바탕으로 시/도 → 시군구 → 동을 골라보세요 (각 단계에서 "전체"도 선택할 수 있어요). 편의시설 정보는 방문자 제보 기반이라 아직 적을 수 있어요.</p>
+      <p class="hint">식품안전나라 등록 업소와 PETCH가 직접 확인한 정보를 함께 검색합니다. 초록색 PETCH 인증과 회색 공공데이터 표시로 정보 출처를 구분할 수 있어요.</p>
     </div>
 
     <div class="field">
@@ -337,19 +367,6 @@
       <div class="seg" role="tablist" aria-label="동반 형태">
         <button type="button" class="active" data-comp="실내동반">실내 동반</button>
         <button type="button" data-comp="야외동반">야외 동반만</button>
-      </div>
-    </div>
-
-    <div class="field">
-      <p class="field-label">예산 (1인당)</p>
-      <div class="stepper">
-        <button type="button" id="budgetDown" aria-label="예산 낮추기">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6 9 12l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <span class="val" id="budgetVal">~1.5만원</span>
-        <button type="button" id="budgetUp" aria-label="예산 올리기">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
       </div>
     </div>
 
@@ -366,38 +383,22 @@
     </div>
 
     <div class="field">
-      <p class="field-label">동반 가능 동물</p>
-      <div class="select-wrap">
-        <select class="text-input" id="animalSelect">
-          <option value="전체">강아지 · 고양이 모두</option>
-          <option value="강아지">강아지만</option>
-          <option value="고양이">고양이만</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field">
       <p class="field-label">추가 조건</p>
       <div class="check-list">
         <label class="check-row"><input type="checkbox" id="chkTerrace" /> 야외 테라스가 있어요</label>
         <label class="check-row"><input type="checkbox" id="chkPlay" /> 놀이공간이 있어요</label>
         <label class="check-row"><input type="checkbox" id="chkBag" /> 배변봉투를 제공해요</label>
         <label class="check-row"><input type="checkbox" id="chkParking" /> 주차장이 필요해요</label>
+        <label class="check-row"><input type="checkbox" id="chkPetchVerified" /> PETCH 인증 가게만</label>
       </div>
-      <p class="hint">테라스·놀이공간 태그는 PETCH 이용자가 직접 남긴 정보예요. 아직 데이터가 적을 수 있어요.</p>
+      <p class="hint">PETCH 인증은 관리자가 매장 정보를 직접 확인한 가게에만 표시돼요.</p>
     </div>
 
     <div class="field">
       <p class="field-label">메뉴 종류</p>
       <div class="menu-row">
         <div class="select-wrap" style="flex:1;">
-          <select class="text-input" id="menuSelect" disabled>
-            <option>한식</option>
-            <option>양식</option>
-            <option>카페 · 디저트</option>
-            <option>브런치</option>
-            <option>고기 · 술집</option>
-          </select>
+          <select class="text-input" id="menuSelect" disabled></select>
         </div>
         <label class="care-toggle">
           <input type="checkbox" id="menuAny" checked /> 상관없어요
@@ -415,7 +416,7 @@
   <footer>
     <div class="wrap footer-row">
       <div class="footer-brand">PETCH · 우리 아이와 함께하는 외식은 PET!</div>
-      <div>업소 목록은 식품의약품안전처 식품안전나라의 "반려동물 동반 가능 업소" 등록 데이터를 사용했어요. 편의시설(테라스·놀이공간 등) 정보는 방문자 제보 기반이라 아직 적을 수 있어요.</div>
+      <div>회색 공공데이터 표시는 식품안전나라 등록 정보, 초록색 PETCH 인증은 관리자가 직접 추가하거나 확인한 정보입니다.</div>
       <div>방문 전 매장에 반려동물 동반 가능 여부를 다시 한번 확인해주세요.</div>
     </div>
   </footer>
@@ -445,6 +446,69 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="loginOverlay" hidden>
+  <div class="modal login-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-head">
+      <h3 class="modal-title" id="loginTitle">PETCH 회원 로그인</h3>
+      <button class="modal-close" id="loginCloseBtn" aria-label="닫기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <p class="login-desc">데모 기간에는 신규 회원가입을 받지 않습니다. 미리 등록된 회원은 추천·비추천할 수 있고, 매장 정보 관리는 관리자만 가능합니다.</p>
+    <div class="field">
+      <p class="field-label">이메일</p>
+      <input class="text-input login-input" id="loginEmailInput" type="email" autocomplete="email" placeholder="name@example.com" />
+    </div>
+    <div class="field">
+      <p class="field-label">비밀번호</p>
+      <input class="text-input login-input" id="loginPasswordInput" type="password" minlength="6" autocomplete="current-password" placeholder="6자 이상" />
+    </div>
+    <div class="auth-actions">
+      <button class="cta" type="button" id="loginSubmitBtn">로그인</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="adminOverlay" hidden>
+  <div class="modal admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal-head">
+      <div>
+        <h3 class="modal-title" id="adminTitle">PETCH 가게 관리</h3>
+        <p class="admin-note">저장하면 관리자 확인 시각과 PETCH 인증이 자동으로 기록됩니다.</p>
+      </div>
+      <button class="modal-close" id="adminCloseBtn" aria-label="닫기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form class="admin-form" id="adminPlaceForm">
+      <input type="hidden" id="adminPlaceKey" />
+      <input type="hidden" id="adminOrigin" value="admin_manual" />
+      <div class="admin-grid">
+        <input class="text-input wide" id="adminName" required placeholder="가게명" />
+        <select class="text-input" id="adminCat"><option>식당</option><option>카페</option></select>
+        <input class="text-input" id="adminMenu" required placeholder="메뉴 종류" />
+        <input class="text-input" id="adminSido" required placeholder="시/도" />
+        <input class="text-input" id="adminGu" required placeholder="시/군/구" />
+        <input class="text-input" id="adminDong" placeholder="읍/면/동" />
+        <input class="text-input wide" id="adminAddr" required placeholder="도로명 주소" />
+        <input class="text-input wide" id="adminPhone" placeholder="전화번호" />
+        <select class="text-input" id="adminSize"><option value="전체">크기 제한 없음</option><option value="소형견">소형견까지</option><option value="중형견">중형견까지</option><option value="대형견">대형견 가능</option></select>
+        <select class="text-input" id="adminComp"><option value="실내동반">실내 동반</option><option value="야외동반">야외 동반만</option></select>
+        <input class="text-input" id="adminLat" type="number" step="any" required placeholder="위도" />
+        <input class="text-input" id="adminLng" type="number" step="any" required placeholder="경도" />
+        <textarea class="text-input wide" id="adminVerificationNote" rows="3" required placeholder="확인 근거와 조건 (예: 2026-09-11 매장 전화 확인, 유모차 필수)"></textarea>
+      </div>
+      <div class="admin-checks">
+        <label><input type="checkbox" id="adminTerrace" /> 야외테라스</label>
+        <label><input type="checkbox" id="adminPlay" /> 놀이공간</label>
+        <label><input type="checkbox" id="adminBag" /> 배변봉투 제공</label>
+        <label><input type="checkbox" id="adminParking" /> 주차장</label>
+      </div>
+      <button class="cta" type="submit" id="adminSaveBtn">PETCH 인증 정보 저장</button>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -452,11 +516,11 @@
   "use strict";
 
   var PLACES = [
-    {name:"(주)툭툭누들타이(티티그릴)", cat:"식당", menu:"양식", sido:"서울", gu:"강남구", dong:"신사동", region:"강남구 신사동", addr:"서울특별시 강남구 논현로152길 37", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51618, lng:127.04719, icon:"🍝"},
+    {name:"(주)툭툭누들타이(티티그릴)", cat:"식당", menu:"아시안", sido:"서울", gu:"강남구", dong:"신사동", region:"강남구 신사동", addr:"서울특별시 강남구 논현로152길 37", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51618, lng:127.04719, icon:"🍝"},
     {name:"독스아일랜드 논현", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"강남구", dong:"논현동", region:"강남구 논현동", addr:"서울특별시 강남구 학동로33길 24", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51201, lng:127.04606, icon:"☕"},
     {name:"DRIFTWOOD(드리프트우드)", cat:"식당", menu:"한식", sido:"서울", gu:"강동구", dong:"성내동", region:"강동구 성내동", addr:"서울특별시 강동구 풍성로41길 95", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53469, lng:127.12654, icon:"🍚"},
     {name:"마시쓰(massiss)", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"강동구", dong:"천호동", region:"강동구 천호동", addr:"서울특별시 강동구 천호대로151길 31", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53073, lng:127.12318, icon:"☕"},
-    {name:"라라브레드&키친 수유", cat:"식당", menu:"한식", sido:"서울", gu:"강북구", dong:"수유동", region:"강북구 수유동", addr:"서울특별시 강북구 노해로14길 8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.63758, lng:127.01974, icon:"🍚"},
+    {name:"라라브레드&키친 수유", cat:"식당", menu:"베이커리", sido:"서울", gu:"강북구", dong:"수유동", region:"강북구 수유동", addr:"서울특별시 강북구 노해로14길 8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.63758, lng:127.01974, icon:"🍚"},
     {name:"하우스 라로바", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"강북구", dong:"수유동", region:"강북구 수유동", addr:"서울특별시 강북구 인수봉로 310", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.63407, lng:127.02824, icon:"☕"},
     {name:"the whatever(더 왓에버)", cat:"식당", menu:"한식", sido:"서울", gu:"강서구", dong:"마곡동", region:"강서구 마곡동", addr:"서울특별시 강서구 마곡중앙2로 15", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5531, lng:126.85046, icon:"🍚"},
     {name:"INNER PEACE(이너피스)", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"강서구", dong:"등촌동", region:"강서구 등촌동", addr:"서울특별시 강서구 양천로66길 6", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.54551, lng:126.85479, icon:"☕"},
@@ -496,7 +560,7 @@
     {name:"아키비스트 한남", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"용산구", dong:"한남동", region:"용산구 한남동", addr:"서울특별시 용산구 한남대로42길 41", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53056, lng:126.99639, icon:"☕"},
     {name:"213점", cat:"식당", menu:"한식", sido:"서울", gu:"은평구", dong:"응암동", region:"은평구 응암동", addr:"서울특별시 은평구 응암로21가길 27", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5997, lng:126.92691, icon:"🍚"},
     {name:"라온다", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"은평구", dong:"신사동", region:"은평구 신사동", addr:"서울특별시 은평구 증산로19길 8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.59727, lng:126.92344, icon:"☕"},
-    {name:"마그넷 케이크룸(MAGNETTT-cakeroom)", cat:"식당", menu:"카페 · 디저트", sido:"서울", gu:"종로구", dong:"내자동", region:"종로구 내자동", addr:"서울특별시 종로구 사직로12길 1-2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56904, lng:126.97372, icon:"☕"},
+    {name:"마그넷 케이크룸(MAGNETTT-cakeroom)", cat:"식당", menu:"베이커리", sido:"서울", gu:"종로구", dong:"내자동", region:"종로구 내자동", addr:"서울특별시 종로구 사직로12길 1-2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56904, lng:126.97372, icon:"☕"},
     {name:"꼬모윤(comoyoon)", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"종로구", dong:"계동", region:"종로구 계동", addr:"서울특별시 종로구 계동길 57", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57427, lng:126.98444, icon:"☕"},
     {name:"97.7화씨", cat:"식당", menu:"한식", sido:"서울", gu:"중구", dong:"황학동", region:"중구 황학동", addr:"서울특별시 중구 난계로15길 41-7", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5661, lng:127.00253, icon:"🍚"},
     {name:"뉘앙스 서울(nuance Seoul)", cat:"카페", menu:"카페 · 디저트", sido:"서울", gu:"중구", dong:"신당동", region:"중구 신당동", addr:"서울특별시 중구 다산로38길 13", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56884, lng:126.99688, icon:"☕"},
@@ -519,7 +583,7 @@
     {name:"100 ROAD", cat:"식당", menu:"한식", sido:"경기", gu:"김포시", dong:"월곶면", region:"경기 김포시 월곶면", addr:"경기도 김포시 월곶면 월하로 96", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.60066, lng:126.70181, icon:"🍚"},
     {name:"1번지멍닭", cat:"식당", menu:"한식", sido:"경기", gu:"동두천시", dong:"생연동", region:"경기 동두천시 생연동", addr:"경기도 동두천시 중앙로 253", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.91783, lng:127.08012, icon:"🍚"},
     {name:"1 way in(원 웨이 인)", cat:"식당", menu:"한식", sido:"광주", gu:"동구", dong:"운림동", region:"광주 동구 운림동", addr:"전남광주통합특별시 동구 동산길 73-3", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.13134, lng:126.94933, icon:"🍚"},
-    {name:"꽃돼지브로 용봉점", cat:"식당", menu:"한식", sido:"광주", gu:"북구", dong:"용봉동", region:"광주 북구 용봉동", addr:"전남광주통합특별시 북구 용봉택지로 62", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.19335, lng:126.92706, icon:"🍚"},
+    {name:"꽃돼지브로 용봉점", cat:"식당", menu:"고기 · 술집", sido:"광주", gu:"북구", dong:"용봉동", region:"광주 북구 용봉동", addr:"전남광주통합특별시 북구 용봉택지로 62", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.19335, lng:126.92706, icon:"🍚"},
     {name:"독도집", cat:"식당", menu:"한식", sido:"광주", gu:"서구", dong:"쌍촌동", region:"광주 서구 쌍촌동", addr:"전남광주통합특별시 서구 상무대로876번길 11", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.1389, lng:126.88441, icon:"🍚"},
     {name:"효담", cat:"식당", menu:"한식", sido:"광주", gu:"남구", dong:"월산동", region:"광주 남구 월산동", addr:"전남광주통합특별시 남구 금화로440번길 3", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.14638, lng:126.88647, icon:"🍚"},
     {name:"리브베", cat:"식당", menu:"한식", sido:"광주", gu:"광산구", dong:"쌍암동", region:"광주 광산구 쌍암동", addr:"전남광주통합특별시 광산구 첨단중앙로182번길 76", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.1523, lng:126.79904, icon:"🍚"},
@@ -533,7 +597,7 @@
     {name:"그레이 레이지", cat:"식당", menu:"한식", sido:"전남", gu:"무안군", dong:"삼향읍", region:"전남 무안군 삼향읍", addr:"전남광주통합특별시 무안군 삼향읍 대죽서로16번길 27", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.00806, lng:126.47632, icon:"🍚"},
     {name:"구례역 대합실(아지티 구례점)", cat:"식당", menu:"한식", sido:"전남", gu:"구례군", dong:"구례읍", region:"전남 구례군 구례읍", addr:"전남광주통합특별시 구례군 구례읍 섬진강로 23", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.18417, lng:127.45809, icon:"🍚"},
     {name:"제일 아트리움", cat:"식당", menu:"한식", sido:"전남", gu:"장성군", dong:"진원면", region:"전남 장성군 진원면", addr:"전남광주통합특별시 장성군 진원면 불태3로 138-59", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.31115, lng:126.7757, icon:"🍚"},
-    {name:"베이커리앤카페", cat:"식당", menu:"카페 · 디저트", sido:"전남", gu:"진도군", dong:"의신면", region:"전남 진도군 의신면", addr:"전남광주통합특별시 진도군 의신면 송군길 30-40", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:34.50191, lng:126.26041, icon:"☕"},
+    {name:"베이커리앤카페", cat:"식당", menu:"베이커리", sido:"전남", gu:"진도군", dong:"의신면", region:"전남 진도군 의신면", addr:"전남광주통합특별시 진도군 의신면 송군길 30-40", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:34.50191, lng:126.26041, icon:"☕"},
     {name:"카페100", cat:"식당", menu:"카페 · 디저트", sido:"전남", gu:"보성군", dong:"보성읍", region:"전남 보성군 보성읍", addr:"전남광주통합특별시 보성군 보성읍 봉화로 87", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:34.78131, lng:127.08035, icon:"☕"},
     {name:"초효", cat:"식당", menu:"한식", sido:"전남", gu:"해남군", dong:"해남읍", region:"전남 해남군 해남읍", addr:"전남광주통합특별시 해남군 해남읍 구교1길 17-8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:34.58871, lng:126.597, icon:"🍚"},
     {name:"헥헥(heckheck)", cat:"카페", menu:"카페 · 디저트", sido:"전남", gu:"광양시", dong:"광양읍", region:"전남 광양시 광양읍", addr:"전남광주통합특별시 광양시 광양읍 석정길 15-9", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:34.94711, lng:127.71137, icon:"☕"},
@@ -550,7 +614,7 @@
     {name:"능암골가든", cat:"식당", menu:"한식", sido:"충북", gu:"충주시", dong:"앙성면", region:"충북 충주시 앙성면", addr:"충청북도 충주시 앙성면 가곡로 1546", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.98339, lng:127.92557, icon:"🍚"},
     {name:"도원", cat:"식당", menu:"한식", sido:"충북", gu:"제천시", dong:"한수면", region:"충북 제천시 한수면", addr:"충청북도 제천시 한수면 월악로 1389", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.12247, lng:128.20496, icon:"🍚"},
     {name:"동반", cat:"식당", menu:"한식", sido:"충북", gu:"영동군", dong:"영동읍", region:"충북 영동군 영동읍", addr:"충청북도 영동군 영동읍 성안길 25", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.15528, lng:127.78444, icon:"🍚"},
-    {name:"뚱이꼬마김밥&분식", cat:"식당", menu:"한식", sido:"충북", gu:"음성군", dong:"대소읍", region:"충북 음성군 대소읍", addr:"충청북도 음성군 대소읍 성본산단4로 40", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.94702, lng:127.68242, icon:"🍚"},
+    {name:"뚱이꼬마김밥&분식", cat:"식당", menu:"분식", sido:"충북", gu:"음성군", dong:"대소읍", region:"충북 음성군 대소읍", addr:"충청북도 음성군 대소읍 성본산단4로 40", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.94702, lng:127.68242, icon:"🍚"},
     {name:"새재황토방", cat:"식당", menu:"한식", sido:"충북", gu:"괴산군", dong:"연풍면", region:"충북 괴산군 연풍면", addr:"충청북도 괴산군 연풍면 새재로 1833", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.81936, lng:127.7832, icon:"🍚"},
     {name:"어디야냥까페", cat:"식당", menu:"한식", sido:"충북", gu:"보은군", dong:"보은읍", region:"충북 보은군 보은읍", addr:"충청북도 보은군 보은읍 삼산로2길 6", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.49194, lng:127.72683, icon:"🍚"},
     {name:"다이너 세종점", cat:"식당", menu:"한식", sido:"세종", gu:"세종", dong:"고운동", region:"세종 세종 고운동", addr:"세종특별자치시 마음안1로 137", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.50532, lng:127.25091, icon:"🍚"},
@@ -574,10 +638,10 @@
     {name:"게더그라운즈(Gather grounds)", cat:"식당", menu:"한식", sido:"경북", gu:"포항시 남구", dong:"대잠동", region:"경북 포항시 남구 대잠동", addr:"경상북도 포항시 남구 대이로111번길 9", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.95953, lng:129.33933, icon:"🍚"},
     {name:"도기온", cat:"식당", menu:"한식", sido:"경북", gu:"경산시", dong:"하양읍", region:"경북 경산시 하양읍", addr:"경상북도 경산시 하양읍 대경로 117", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.83931, lng:128.75782, icon:"🍚"},
     {name:"도도한이서", cat:"식당", menu:"한식", sido:"경북", gu:"구미시", dong:"옥계동", region:"경북 구미시 옥계동", addr:"경상북도 구미시 산호대로24길 9-15", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.1291, lng:128.33457, icon:"🍚"},
-    {name:"라면집", cat:"식당", menu:"한식", sido:"경북", gu:"영덕군", dong:"강구면", region:"경북 영덕군 강구면", addr:"경상북도 영덕군 강구면 영덕대게로 161", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.40218, lng:129.3546, icon:"🍚"},
-    {name:"루이토스트", cat:"식당", menu:"브런치", sido:"경북", gu:"칠곡군", dong:"지천면", region:"경북 칠곡군 지천면", addr:"경상북도 칠곡군 지천면 신동로 80-2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.99444, lng:128.41062, icon:"🥐"},
+    {name:"라면집", cat:"식당", menu:"분식", sido:"경북", gu:"영덕군", dong:"강구면", region:"경북 영덕군 강구면", addr:"경상북도 영덕군 강구면 영덕대게로 161", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.40218, lng:129.3546, icon:"🍚"},
+    {name:"루이토스트", cat:"식당", menu:"한식", sido:"경북", gu:"칠곡군", dong:"지천면", region:"경북 칠곡군 지천면", addr:"경상북도 칠곡군 지천면 신동로 80-2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.99444, lng:128.41062, icon:"🥐"},
     {name:"시야", cat:"식당", menu:"한식", sido:"경북", gu:"안동시", dong:"옥정동", region:"경북 안동시 옥정동", addr:"경상북도 안동시 태사2길 92", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.5633, lng:128.74747, icon:"🍚"},
-    {name:"가든숯불막창", cat:"식당", menu:"한식", sido:"대구", gu:"달서구", dong:"월성동", region:"대구 달서구 월성동", addr:"대구광역시 달서구 상원로 174-4", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.8356, lng:128.54133, icon:"🍚"},
+    {name:"가든숯불막창", cat:"식당", menu:"고기 · 술집", sido:"대구", gu:"달서구", dong:"월성동", region:"대구 달서구 월성동", addr:"대구광역시 달서구 상원로 174-4", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.8356, lng:128.54133, icon:"🍚"},
     {name:"감자네", cat:"식당", menu:"한식", sido:"대구", gu:"동구", dong:"용계동", region:"대구 동구 용계동", addr:"대구광역시 동구 화랑로 508", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.89002, lng:128.6369, icon:"🍚"},
     {name:"강새이", cat:"식당", menu:"한식", sido:"대구", gu:"남구", dong:"대명동", region:"대구 남구 대명동", addr:"대구광역시 남구 현충로25길 5", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.86328, lng:128.58736, icon:"🍚"},
     {name:"꽁테드빌레(contedeville)", cat:"식당", menu:"한식", sido:"대구", gu:"수성구", dong:"만촌동", region:"대구 수성구 만촌동", addr:"대구광역시 수성구 청호로94길 59", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.85039, lng:128.61642, icon:"🍚"},
@@ -601,7 +665,7 @@
     {name:"경대반점 진주경상대본점", cat:"식당", menu:"한식", sido:"경남", gu:"진주시", dong:"가좌동", region:"경남 진주시 가좌동", addr:"경상남도 진주시 진주대로 522", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.17066, lng:128.11701, icon:"🍚"},
     {name:"그담애", cat:"식당", menu:"한식", sido:"경남", gu:"합천군", dong:"대양면", region:"경남 합천군 대양면", addr:"경상남도 합천군 대양면 동부로 21-10", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.55932, lng:128.15121, icon:"🍚"},
     {name:"간절곶 마실감 울산서생본점", cat:"식당", menu:"한식", sido:"울산", gu:"울주군", dong:"서생면", region:"울산 울주군 서생면", addr:"울산광역시 울주군 서생면 해맞이로 1220", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.52181, lng:129.23332, icon:"🍚"},
-    {name:"고래미 캠핑바베큐", cat:"식당", menu:"고기 · 술집", sido:"울산", gu:"북구", dong:"창평동", region:"울산 북구 창평동", addr:"울산광역시 북구 호계로 45", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.57551, lng:129.35088, icon:"🍖"},
+    {name:"고래미 캠핑바베큐", cat:"식당", menu:"한식", sido:"울산", gu:"북구", dong:"창평동", region:"울산 북구 창평동", addr:"울산광역시 북구 호계로 45", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.57551, lng:129.35088, icon:"🍖"},
     {name:"녹음", cat:"식당", menu:"한식", sido:"울산", gu:"중구", dong:"성안동", region:"울산 중구 성안동", addr:"울산광역시 중구 성안12길 5", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.55084, lng:129.34579, icon:"🍚"},
     {name:"듀이", cat:"식당", menu:"한식", sido:"울산", gu:"동구", dong:"화정동", region:"울산 동구 화정동", addr:"울산광역시 동구 화진길 125", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.5143, lng:129.42049, icon:"🍚"},
     {name:"멜르", cat:"식당", menu:"한식", sido:"울산", gu:"남구", dong:"무거동", region:"울산 남구 무거동", addr:"울산광역시 남구 대학로121번길 16", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.53794, lng:129.33893, icon:"🍚"},
@@ -644,7 +708,7 @@
     {name:"가배로스터스", cat:"카페", menu:"카페 · 디저트", sido:"대전", gu:"유성구", dong:"어은동", region:"대전 유성구 어은동", addr:"대전광역시 유성구 어은로42번길 21-10", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.38163, lng:127.35553, icon:"☕"},
     {name:"루트커피 복합터미널점", cat:"카페", menu:"카페 · 디저트", sido:"대전", gu:"동구", dong:"용전동", region:"대전 동구 용전동", addr:"대전광역시 동구 동서대로 1677", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.29437, lng:127.44585, icon:"☕"},
     {name:"스틸리듬(STILL RHYTHM)", cat:"카페", menu:"카페 · 디저트", sido:"대전", gu:"대덕구", dong:"비래동", region:"대전 대덕구 비래동", addr:"대전광역시 대덕구 동서대로1754번길 23", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.36079, lng:127.41019, icon:"☕"},
-    {name:"그랜드파더케이크하우스", cat:"카페", menu:"카페 · 디저트", sido:"부산", gu:"수영구", dong:"광안동", region:"부산 수영구 광안동", addr:"부산광역시 수영구 남천바다로15번길 93", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.14947, lng:129.09367, icon:"☕"},
+    {name:"그랜드파더케이크하우스", cat:"카페", menu:"베이커리", sido:"부산", gu:"수영구", dong:"광안동", region:"부산 수영구 광안동", addr:"부산광역시 수영구 남천바다로15번길 93", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.14947, lng:129.09367, icon:"☕"},
     {name:"넌슬립", cat:"카페", menu:"카페 · 디저트", sido:"부산", gu:"부산진구", dong:"전포동", region:"부산 부산진구 전포동", addr:"부산광역시 부산진구 동성로39번길 31-1", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.15102, lng:129.0556, icon:"☕"},
     {name:"네이처스 세븐(nature's seven)", cat:"카페", menu:"카페 · 디저트", sido:"부산", gu:"해운대구", dong:"우동", region:"부산 해운대구 우동", addr:"부산광역시 해운대구 마린시티2로 33", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.15819, lng:129.14554, icon:"☕"},
     {name:"대청 커피", cat:"카페", menu:"카페 · 디저트", sido:"부산", gu:"중구", dong:"대청동1가", region:"부산 중구 대청동1가", addr:"부산광역시 중구 대청로126번길 4", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.08587, lng:129.04348, icon:"☕"},
@@ -674,29 +738,55 @@
     {name:"EPPY(에피)", cat:"카페", menu:"카페 · 디저트", sido:"충북", gu:"청주시 청원구", dong:"내수읍", region:"충북 청주시 청원구 내수읍", addr:"충청북도 청주시 청원구 내수읍 도원세교로 350", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.65448, lng:127.46997, icon:"☕"},
     {name:"굿나잇커피앤북(Good Night coffee&Book)", cat:"카페", menu:"카페 · 디저트", sido:"충북", gu:"충주시", dong:"목행동", region:"충북 충주시 목행동", addr:"충청북도 충주시 행정5길 25", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.0054, lng:127.93816, icon:"☕"},
     {name:"서로수 팜마켓", cat:"카페", menu:"카페 · 디저트", sido:"충북", gu:"제천시", dong:"백운면", region:"충북 제천시 백운면", addr:"충청북도 제천시 백운면 금봉로 146", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.13343, lng:128.20957, icon:"☕"},
-    {name:"커피산책", cat:"카페", menu:"카페 · 디저트", sido:"충북", gu:"증평군", dong:"증평읍", region:"충북 증평군 증평읍", addr:"충청북도 증평군 증평읍 광장로 96", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.8032, lng:127.5755, icon:"☕"}
+    {name:"커피산책", cat:"카페", menu:"카페 · 디저트", sido:"충북", gu:"증평군", dong:"증평읍", region:"충북 증평군 증평읍", addr:"충청북도 증평군 증평읍 광장로 96", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:36.8032, lng:127.5755, icon:"☕"},
+    {name:"멍디브", cat:"카페", menu:"애견카페 · 디저트", sido:"광주", gu:"북구", dong:"본촌동", region:"광주 북구 본촌동", addr:"광주광역시 북구 하서로 610-9 1층", phone:"0507-1315-0330", size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:true, bag:false, parking:false, lat:35.2195, lng:126.873, icon:"🐶"},
+    {name:"해피멍데이", cat:"카페", menu:"애견카페 · 운동장", sido:"경남", gu:"김해시", dong:"내동", region:"경남 김해시 내동", addr:"경상남도 김해시 금관대로1297번길 11-1 A동 1F", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:35.2265, lng:128.8836, icon:"🐾"},
+    {name:"더필드", cat:"카페", menu:"애견카페 · 운동장", sido:"전남", gu:"순천시", dong:"해룡면", region:"전남 순천시 해룡면", addr:"전라남도 순천시 해룡면 남가1길 90-39 1층", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:34.8956, lng:127.5379, icon:"🐾"},
+    {name:"그랑독", cat:"카페", menu:"애견카페 · 운동장", sido:"부산", gu:"강서구", dong:"봉림동", region:"부산 강서구 봉림동", addr:"부산광역시 강서구 가락대로 1274", phone:"010-5768-3379", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:35.2016, lng:128.9453, icon:"🐾"},
+    {name:"동그라운드", cat:"카페", menu:"애견카페 · 운동장", sido:"대구", gu:"달성군", dong:"다사읍", region:"대구 달성군 다사읍", addr:"대구광역시 달성군 다사읍 문양역5길 104-5 1층", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:35.8377, lng:128.4691, icon:"🐾"},
+    {name:"오멍가멍", cat:"카페", menu:"애견카페 · 운동장", sido:"제주", gu:"제주시", dong:"용담삼동", region:"제주 제주시 용담삼동", addr:"제주특별자치도 제주시 어영길 64-14 1층", phone:"0507-1337-0567", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:33.5089, lng:126.5062, icon:"🐾"},
+    {name:"오프리쉬 독파크", cat:"카페", menu:"애견카페 · 운동장", sido:"경기", gu:"파주시", dong:"문산읍", region:"경기 파주시 문산읍", addr:"경기도 파주시 문산읍 임진나루길 196-41 1동", phone:"070-4187-8806", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:37.8807, lng:126.7825, icon:"🐾"},
+    {name:"뽀야네 딩가댕가", cat:"카페", menu:"애견카페 · 운동장", sido:"경기", gu:"포천시", dong:"소흘읍", region:"경기 포천시 소흘읍", addr:"경기도 포천시 소흘읍 광릉수목원로 1104 (나)동", phone:"0507-1463-5447", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:37.8206, lng:127.1541, icon:"🐾"},
+    {name:"개떼놀이터 인천점", cat:"카페", menu:"애견카페 · 운동장", sido:"인천", gu:"계양구", dong:"목상동", region:"인천 계양구 목상동", addr:"인천광역시 계양구 다남로 278", phone:"0507-1413-1950", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:37.6103, lng:126.7256, icon:"🐾"},
+    {name:"괜찮아댕댕냥", cat:"카페", menu:"애견카페 · 운동장", sido:"충북", gu:"청주시 흥덕구", dong:"비하동", region:"충북 청주시 흥덕구 비하동", addr:"충청북도 청주시 흥덕구 가로수로 1065-10 B동 1층", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:36.6205, lng:127.4223, icon:"🐾"},
+    {name:"울댕카페 파쏘 북대전점", cat:"카페", menu:"애견카페 · 운동장", sido:"대전", gu:"유성구", dong:"관평동", region:"대전 유성구 관평동", addr:"대전광역시 유성구 관용로 52 1층", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:false, lat:36.3958, lng:127.3644, icon:"🐾"}
   ];
 
+  function normalizeKeyPart(value){
+    return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+  }
+  function placeKey(place){
+    return normalizeKeyPart(place.name) + "|" + normalizeKeyPart(place.addr);
+  }
+  PLACES.forEach(function(place){
+    place.place_key = place.place_key || placeKey(place);
+    place.origin = place.origin || "public_data";
+    place.is_petch_verified = !!place.is_petch_verified;
+  });
+
   var state = {
-    cat:"식당", comp:"실내동반", quick:null, budget:1,
+    cat:"식당", comp:"실내동반", quick:null,
     locMode:"region",              // "region" | "near"
     sido:"서울", gu:"성동구", dong:"성수동",
     myLat:null, myLng:null
   };
-  var BUDGETS = ["~1만원","~1.5만원","~2만원","~3만원","2인 이상 세트"];
   var NEAR_RADIUS_KM = 20;
 
-  /* ---- region tree, built from PLACES: { 시도: { 구/시/군: Set(동/읍/면) } } ---- */
+  /* ---- region tree, rebuilt after admin-managed places are loaded ---- */
   var REGION_TREE = {};
   var SIDO_ORDER = ["서울","경기","인천","강원","충북","충남","대전","세종","경북","경남","대구","울산","부산","전북","전남","광주","제주"];
-  PLACES.forEach(function(p){
-    if(!p.sido) return;
-    REGION_TREE[p.sido] = REGION_TREE[p.sido] || {};
-    REGION_TREE[p.sido][p.gu] = REGION_TREE[p.sido][p.gu] || [];
-    if(p.dong && REGION_TREE[p.sido][p.gu].indexOf(p.dong) === -1){
-      REGION_TREE[p.sido][p.gu].push(p.dong);
-    }
-  });
+  function rebuildRegionTree(){
+    REGION_TREE = {};
+    PLACES.forEach(function(p){
+      if(!p.sido || !p.gu) return;
+      REGION_TREE[p.sido] = REGION_TREE[p.sido] || {};
+      REGION_TREE[p.sido][p.gu] = REGION_TREE[p.sido][p.gu] || [];
+      if(p.dong && REGION_TREE[p.sido][p.gu].indexOf(p.dong) === -1){
+        REGION_TREE[p.sido][p.gu].push(p.dong);
+      }
+    });
+  }
+  rebuildRegionTree();
 
   var favorites = {};
   try{
@@ -706,6 +796,10 @@
   function saveFavorites(){
     try{ localStorage.setItem("petch_favorites", JSON.stringify(favorites)); }catch(e){}
   }
+
+  /* Vote state comes from Supabase and is enforced per authenticated user. */
+  var myVotes = {};
+  var voteCounts = {};
 
   function $(sel){ return document.querySelector(sel); }
   function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
@@ -718,45 +812,110 @@
     showToast._tm = setTimeout(function(){ t.classList.remove("show"); }, 1800);
   }
 
-  /* ---- Supabase: shared "정보 추가" reports from real visitors ----
-     Uses a publishable (client-safe) key, same idea as the Kakao JS key —
-     safe to ship in the page. Requires a `place_tags` table with public
-     read/insert policies; see README for the SQL to run once in the
-     Supabase SQL editor. Every call is wrapped so a missing table or a
-     network hiccup just shows a toast instead of breaking the page. */
+  /* ---- Supabase Auth, member votes, and admin-managed place information ---- */
   var SUPABASE_URL = "https://gddmhlukbpnyjgynpfip.supabase.co";
   var SUPABASE_KEY = "sb_publishable_Ca-ruz-FBOPaKpbhjiga6A_kPCLBSqu";
-  var REPORT_TAGS = ["야외테라스", "놀이공간", "배변봉투 제공", "주차장"];
   var supabaseClient = null;
+  var currentUser = null;
+  var currentRole = "guest";
   try{
     if(window.supabase && window.supabase.createClient){
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     }
   }catch(e){ supabaseClient = null; }
 
-  function submitTag(placeName, tag, countsEl){
-    if(!supabaseClient){ showToast("지금은 정보를 저장할 수 없어요"); return; }
-    supabaseClient.from("place_tags").insert({ place_name: placeName, tag: tag }).then(function(res){
-      if(res && res.error){
-        showToast("아직 저장 준비가 안 됐어요 (테이블 설정을 확인해주세요)");
-        return;
-      }
-      showToast("제보 감사해요 🐾");
-      loadTagCounts(placeName, countsEl);
-    }).catch(function(){ showToast("저장 중 문제가 생겼어요"); });
+  function isLoggedIn(){ return !!currentUser; }
+  function isAdmin(){ return currentRole === "admin"; }
+
+  function loadManagedPlaces(){
+    if(!supabaseClient) return Promise.resolve();
+    return supabaseClient.from("places").select("*").then(function(res){
+      if(!res || res.error || !res.data) return;
+      var byKey = {};
+      PLACES.forEach(function(p, index){ byKey[p.place_key] = index; });
+      res.data.forEach(function(row){
+        row.lat = row.lat === null ? null : Number(row.lat);
+        row.lng = row.lng === null ? null : Number(row.lng);
+        row.is_petch_verified = !!row.is_petch_verified;
+        if(Object.prototype.hasOwnProperty.call(byKey, row.place_key)){
+          PLACES[byKey[row.place_key]] = Object.assign({}, PLACES[byKey[row.place_key]], row);
+        } else {
+          PLACES.push(row);
+        }
+      });
+      rebuildRegionTree();
+      populateMenuSelect();
+      populateSido();
+      populateGu();
+      populateDong();
+      renderRank();
+    }).catch(function(){});
   }
 
-  function loadTagCounts(placeName, countsEl){
-    if(!countsEl) return;
-    if(!supabaseClient){ countsEl.textContent = ""; return; }
-    countsEl.textContent = "불러오는 중…";
-    supabaseClient.from("place_tags").select("tag").eq("place_name", placeName).then(function(res){
-      if(!res || res.error || !res.data){ countsEl.textContent = ""; return; }
-      var counts = {};
-      res.data.forEach(function(row){ counts[row.tag] = (counts[row.tag] || 0) + 1; });
-      var parts = Object.keys(counts).map(function(k){ return k + " " + counts[k] + "회"; });
-      countsEl.textContent = parts.length ? ("지금까지 제보: " + parts.join(", ")) : "아직 제보가 없어요 — 첫 제보를 남겨보세요!";
-    }).catch(function(){ countsEl.textContent = ""; });
+  function loadCurrentProfile(user){
+    currentUser = user || null;
+    currentRole = "guest";
+    myVotes = {};
+    if(!user || !supabaseClient){ renderLoginBtn(); return Promise.resolve(); }
+    return supabaseClient.from("profiles").select("role").eq("id", user.id).maybeSingle().then(function(res){
+      currentRole = res && res.data && res.data.role === "admin" ? "admin" : "member";
+      renderLoginBtn();
+    }).catch(function(){ currentRole = "member"; renderLoginBtn(); });
+  }
+
+  function loadVoteCounts(keys){
+    if(!supabaseClient || !keys.length) return Promise.resolve();
+    return supabaseClient.rpc("get_place_votes", {p_place_keys:keys}).then(function(res){
+      if(!res || res.error || !res.data) return;
+      res.data.forEach(function(row){
+        voteCounts[row.place_key] = {up:Number(row.up_count || 0), down:Number(row.down_count || 0)};
+        if(row.my_vote) myVotes[row.place_key] = row.my_vote;
+      });
+      updateVisibleVoteButtons();
+    }).catch(function(){});
+  }
+
+  function updateVisibleVoteButtons(){
+    $all(".card[data-place-key]").forEach(function(card){
+      var key = card.getAttribute("data-place-key");
+      var counts = voteCounts[key] || {up:0, down:0};
+      var upBtn = card.querySelector("[data-vote-up]");
+      var downBtn = card.querySelector("[data-vote-down]");
+      if(!upBtn || !downBtn) return;
+      upBtn.querySelector(".vote-count").textContent = String(counts.up);
+      downBtn.querySelector(".vote-count").textContent = String(counts.down);
+      upBtn.classList.toggle("voted", myVotes[key] === "up");
+      downBtn.classList.toggle("voted", myVotes[key] === "down");
+    });
+  }
+
+  function castVote(placeKeyValue, vote){
+    if(!requireLogin()) return;
+    if(!supabaseClient){ showToast("지금은 저장할 수 없어요"); return; }
+    supabaseClient.rpc("cast_place_vote", {p_place_key:placeKeyValue, p_vote:vote}).then(function(res){
+      if(res && res.error){ showToast("투표를 저장하지 못했어요"); return; }
+      myVotes[placeKeyValue] = vote;
+      showToast(vote === "up" ? "추천을 반영했어요" : "비추천을 반영했어요");
+      loadVoteCounts([placeKeyValue]);
+    }).catch(function(){ showToast("투표 저장 중 문제가 생겼어요"); });
+  }
+
+  /* ---- 메뉴 종류: 실제 PLACES 데이터에 있는 값만 골라 보여줘요 (식당/카페 탭마다 다름) ---- */
+  var MENU_ORDER = ["한식","고기 · 술집","분식","중식","일식","아시안","양식","브런치","카페 · 디저트","베이커리","애견카페 · 운동장","애견카페 · 디저트"];
+  function populateMenuSelect(){
+    var menus = [];
+    PLACES.forEach(function(p){
+      if(p.cat === state.cat && menus.indexOf(p.menu) === -1) menus.push(p.menu);
+    });
+    menus.sort(function(a, b){
+      var ia = MENU_ORDER.indexOf(a), ib = MENU_ORDER.indexOf(b);
+      if(ia === -1) ia = 999; if(ib === -1) ib = 999;
+      return ia - ib;
+    });
+    var sel = $("#menuSelect");
+    var prev = sel.value;
+    sel.innerHTML = menus.map(function(m){ return '<option value="' + escapeHtml(m) + '">' + escapeHtml(m) + '</option>'; }).join("");
+    sel.value = menus.indexOf(prev) !== -1 ? prev : (menus[0] || "");
   }
 
   /* segment: 식당/카페 */
@@ -766,8 +925,7 @@
     state.cat = cat;
     $("#segFood").classList.toggle("active", cat === "식당");
     $("#segCafe").classList.toggle("active", cat === "카페");
-    var menuSel = $("#menuSelect");
-    if(cat === "카페"){ menuSel.value = "카페 · 디저트"; }
+    populateMenuSelect();
   }
 
   /* segment: 동반 형태 */
@@ -778,16 +936,11 @@
     });
   });
 
-  /* budget stepper */
-  function renderBudget(){ $("#budgetVal").textContent = BUDGETS[state.budget]; }
-  $("#budgetDown").addEventListener("click", function(){ state.budget = Math.max(0, state.budget - 1); renderBudget(); });
-  $("#budgetUp").addEventListener("click", function(){ state.budget = Math.min(BUDGETS.length - 1, state.budget + 1); renderBudget(); });
-  renderBudget();
-
   /* menu select enable toggle */
   $("#menuAny").addEventListener("change", function(){
     $("#menuSelect").disabled = this.checked;
   });
+  populateMenuSelect();
 
   /* ---- 3-tier region pickers: 시/도 -> 시/군/구 -> 읍/면/동, each with "전체" ---- */
   function fillSelect(sel, options, selectedValue){
@@ -954,7 +1107,133 @@
     });
   });
 
-  $("#loginBtn").addEventListener("click", function(){ showToast("데모 버전이에요 — 로그인 없이 둘러볼 수 있어요"); });
+  /* ---- Supabase email/password authentication ---- */
+  function renderLoginBtn(){
+    var btn = $("#loginBtn");
+    btn.textContent = currentUser ? "로그아웃" : "로그인";
+    btn.classList.toggle("logged-in", isLoggedIn());
+    $("#adminAddBtn").hidden = !isAdmin();
+  }
+  renderLoginBtn();
+
+  function openLoginModal(){
+    $("#loginPasswordInput").value = "";
+    $("#loginOverlay").hidden = false;
+    $("#loginEmailInput").focus();
+  }
+  function closeLoginModal(){ $("#loginOverlay").hidden = true; }
+
+  function requireLogin(){
+    if(isLoggedIn()) return true;
+    showToast("추천·비추천은 로그인한 회원만 가능해요");
+    openLoginModal();
+    return false;
+  }
+
+  function requireAdmin(){
+    if(isAdmin()) return true;
+    showToast("관리자만 매장 정보를 수정할 수 있어요");
+    return false;
+  }
+
+  $("#loginBtn").addEventListener("click", function(){
+    if(isLoggedIn()){
+      supabaseClient.auth.signOut().then(function(){ showToast("로그아웃했어요"); });
+    } else {
+      openLoginModal();
+    }
+  });
+  $("#loginCloseBtn").addEventListener("click", closeLoginModal);
+  $("#loginOverlay").addEventListener("click", function(e){ if(e.target === this) closeLoginModal(); });
+  $("#loginSubmitBtn").addEventListener("click", function(){
+    var email = $("#loginEmailInput").value.trim();
+    var password = $("#loginPasswordInput").value;
+    if(!email || password.length < 6){ showToast("이메일과 6자 이상 비밀번호를 입력해주세요"); return; }
+    supabaseClient.auth.signInWithPassword({email:email, password:password}).then(function(res){
+      if(res.error){ showToast("로그인 정보를 확인해주세요"); return; }
+      closeLoginModal();
+      showToast("로그인했어요");
+    });
+  });
+  function openAdminModal(place){
+    if(!requireAdmin()) return;
+    var isEdit = !!place;
+    $("#adminTitle").textContent = isEdit ? "PETCH 정보 확인·수정" : "PETCH 가게 추가";
+    $("#adminPlaceKey").value = isEdit ? place.place_key : "";
+    $("#adminOrigin").value = isEdit ? (place.origin || "public_data") : "admin_manual";
+    $("#adminName").value = isEdit ? place.name : "";
+    $("#adminCat").value = isEdit ? place.cat : "식당";
+    $("#adminMenu").value = isEdit ? place.menu : "";
+    $("#adminSido").value = isEdit ? place.sido : "";
+    $("#adminGu").value = isEdit ? place.gu : "";
+    $("#adminDong").value = isEdit ? (place.dong || "") : "";
+    $("#adminAddr").value = isEdit ? place.addr : "";
+    $("#adminPhone").value = isEdit ? (place.phone || "") : "";
+    $("#adminSize").value = isEdit ? place.size : "전체";
+    $("#adminComp").value = isEdit ? place.comp : "실내동반";
+    $("#adminLat").value = isEdit && place.lat !== null ? place.lat : "";
+    $("#adminLng").value = isEdit && place.lng !== null ? place.lng : "";
+    $("#adminVerificationNote").value = isEdit ? (place.verification_note || "") : "";
+    $("#adminTerrace").checked = isEdit && !!place.terrace;
+    $("#adminPlay").checked = isEdit && !!place.play;
+    $("#adminBag").checked = isEdit && !!place.bag;
+    $("#adminParking").checked = isEdit && !!place.parking;
+    $("#adminOverlay").hidden = false;
+  }
+  function closeAdminModal(){ $("#adminOverlay").hidden = true; }
+  $("#adminAddBtn").addEventListener("click", function(){ openAdminModal(null); });
+  $("#adminCloseBtn").addEventListener("click", closeAdminModal);
+  $("#adminOverlay").addEventListener("click", function(e){ if(e.target === this) closeAdminModal(); });
+  $("#adminPlaceForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!requireAdmin()) return;
+    var existingKey = $("#adminPlaceKey").value;
+    var payload = {
+      place_key: existingKey || ("manual:" + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now())),
+      name: $("#adminName").value.trim(),
+      cat: $("#adminCat").value,
+      menu: $("#adminMenu").value.trim(),
+      sido: $("#adminSido").value.trim(),
+      gu: $("#adminGu").value.trim(),
+      dong: $("#adminDong").value.trim() || null,
+      region: [$("#adminSido").value, $("#adminGu").value, $("#adminDong").value].map(function(v){ return v.trim(); }).filter(Boolean).join(" "),
+      addr: $("#adminAddr").value.trim(),
+      phone: $("#adminPhone").value.trim() || null,
+      size: $("#adminSize").value,
+      comp: $("#adminComp").value,
+      terrace: $("#adminTerrace").checked,
+      play: $("#adminPlay").checked,
+      bag: $("#adminBag").checked,
+      parking: $("#adminParking").checked,
+      lat: Number($("#adminLat").value),
+      lng: Number($("#adminLng").value),
+      icon: $("#adminCat").value === "카페" ? "☕" : "🍚",
+      origin: $("#adminOrigin").value,
+      verification_note: $("#adminVerificationNote").value.trim()
+    };
+    $("#adminSaveBtn").disabled = true;
+    supabaseClient.from("places").upsert(payload, {onConflict:"place_key"}).then(function(res){
+      $("#adminSaveBtn").disabled = false;
+      if(res.error){ showToast("저장에 실패했어요: " + res.error.message); return; }
+      closeAdminModal();
+      showToast("PETCH 인증 정보를 저장했어요");
+      loadManagedPlaces().then(function(){ if(!$("#modalOverlay").hidden) renderResults(); });
+    }).catch(function(){ $("#adminSaveBtn").disabled = false; showToast("저장 중 문제가 생겼어요"); });
+  });
+
+  if(supabaseClient){
+    supabaseClient.auth.getSession().then(function(res){
+      var user = res.data && res.data.session ? res.data.session.user : null;
+      return loadCurrentProfile(user);
+    }).then(loadManagedPlaces);
+    supabaseClient.auth.onAuthStateChange(function(_event, session){
+      setTimeout(function(){
+        loadCurrentProfile(session ? session.user : null).then(function(){
+          if(!$("#modalOverlay").hidden) renderResults();
+        });
+      }, 0);
+    });
+  }
   $("#locPillBtn").addEventListener("click", function(){
     $("#filterForm").scrollIntoView({behavior:"smooth", block:"start"});
     if(state.locMode === "region"){ $("#sidoSelect").focus(); }
@@ -1006,11 +1285,11 @@
       myLat: state.myLat, myLng: state.myLng,
       comp: state.comp,
       petSize: $("#petSizeSelect").value,
-      animal: $("#animalSelect").value,
       terrace: $("#chkTerrace").checked,
       play: $("#chkPlay").checked,
       bag: $("#chkBag").checked,
       parking: $("#chkParking").checked,
+      petchVerified: $("#chkPetchVerified").checked,
       menuAny: $("#menuAny").checked,
       menu: $("#menuSelect").value,
       quick: state.quick
@@ -1035,21 +1314,16 @@
 
     if(f.comp === "야외동반" && p.comp === "실내동반") { /* indoor places still fine outdoors too */ }
     if(f.petSize !== "전체" && p.size !== "전체" && SIZE_ORDER[p.size] < SIZE_ORDER[f.petSize]) return false;
-    if(f.animal !== "전체" && p.animal !== "전체" && p.animal !== f.animal) return false;
     if(f.terrace && !p.terrace) return false;
     if(f.play && !p.play) return false;
     if(f.bag && !p.bag) return false;
     if(f.parking && !p.parking) return false;
+    if(f.petchVerified && !p.is_petch_verified) return false;
     if(!f.menuAny && p.menu !== f.menu) return false;
     if(f.quick === "large" && p.size !== "대형견" && p.size !== "전체") return false;
     if(f.quick === "cafeOnly" && p.cat !== "카페") return false;
     if(f.quick === "terrace" && !p.terrace) return false;
     return true;
-  }
-
-  function distanceLabel(i){
-    var vals = ["150m","320m","480m","620m","750m","890m","1.1km","1.3km"];
-    return vals[i % vals.length];
   }
 
   function formatKm(km){
@@ -1095,29 +1369,30 @@
         var isFav = !!favorites[p.name];
         var mapQ = encodeURIComponent(p.name + " " + p.region);
         return (
-          '<div class="card" data-name="' + escapeHtml(p.name) + '">' +
+          '<div class="card" data-name="' + escapeHtml(p.name) + '" data-place-key="' + escapeHtml(p.place_key) + '">' +
             '<div class="card-top">' +
               '<div class="card-icon">' + p.icon + '</div>' +
               '<button type="button" class="fav-btn' + (isFav ? ' on' : '') + '" data-fav="' + escapeHtml(p.name) + '" aria-label="즐겨찾기">' +
                 '<svg width="16" height="16" viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '"><path d="M12 17.3 6.2 21l1.5-6.5L2.5 9.9l6.7-.6L12 3l2.8 6.3 6.7.6-5.2 4.6L18 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' +
               '</button>' +
-              '<span class="dist-pill">' + (distMap ? formatKm(distMap[p.name]) : distanceLabel(i)) + '</span>' +
+              (distMap ? '<span class="dist-pill">' + formatKm(distMap[p.name]) + '</span>' : '') +
             '</div>' +
             '<div class="card-name">' + escapeHtml(p.name) + '</div>' +
             '<div class="card-cat">' + escapeHtml(p.cat) + ' · ' + escapeHtml(p.menu) + ' · ' + escapeHtml(p.region) + '</div>' +
             '<div class="card-addr">' + escapeHtml(p.addr) + '</div>' +
             '<div class="card-phone">' + escapeHtml(p.phone || "전화번호 정보 없음") + '</div>' +
+            '<div class="source-row"><span class="source-badge ' + (p.is_petch_verified ? 'verified' : 'public') + '">' +
+              (p.is_petch_verified ? '✓ PETCH 인증' : '공공데이터') + '</span>' +
+              (p.is_petch_verified && p.verified_at ? '<span class="card-cat">' + escapeHtml(String(p.verified_at).slice(0,10)) + ' 확인</span>' : '') +
+            '</div>' +
             (tags.length ? '<div class="tag-row">' + tags.map(function(t){ return '<span class="mini-tag">' + t + '</span>'; }).join("") + '</div>' : '') +
+            (isLoggedIn() ? '<div class="vote-row">' +
+              '<button type="button" class="vote-btn' + (myVotes[p.place_key] === "up" ? ' voted' : '') + '" data-vote-up="' + escapeHtml(p.place_key) + '">👍 추천 <span class="vote-count">0</span></button>' +
+              '<button type="button" class="vote-btn' + (myVotes[p.place_key] === "down" ? ' voted' : '') + '" data-vote-down="' + escapeHtml(p.place_key) + '">👎 비추천 <span class="vote-count">0</span></button>' +
+            '</div>' : '') +
             '<div class="card-actions">' +
               '<a class="btn-dark" href="https://map.kakao.com/link/search/' + mapQ + '" target="_blank" rel="noopener">지도에서 보기</a>' +
-              '<button type="button" class="btn-outline" data-info-toggle="' + escapeHtml(p.name) + '">정보 추가</button>' +
-            '</div>' +
-            '<div class="report-panel" hidden>' +
-              '<p class="report-label">방문해보셨다면 알려주세요</p>' +
-              '<div class="report-tags">' +
-                REPORT_TAGS.map(function(t){ return '<button type="button" class="report-tag-btn" data-tag="' + t + '">' + t + '</button>'; }).join("") +
-              '</div>' +
-              '<div class="report-counts" aria-live="polite"></div>' +
+              (isAdmin() ? '<button type="button" class="btn-outline" data-admin-edit="' + escapeHtml(p.place_key) + '">정보 확인·수정</button>' : '') +
             '</div>' +
           '</div>'
         );
@@ -1133,23 +1408,20 @@
         renderResults();
       });
     });
-    $all("[data-info-toggle]").forEach(function(btn){
+    $all("[data-admin-edit]").forEach(function(btn){
       btn.addEventListener("click", function(){
-        var card = btn.closest(".card");
-        var panel = card.querySelector(".report-panel");
-        panel.hidden = !panel.hidden;
-        if(!panel.hidden){
-          loadTagCounts(btn.getAttribute("data-info-toggle"), panel.querySelector(".report-counts"));
-        }
+        var key = btn.getAttribute("data-admin-edit");
+        var place = PLACES.find(function(item){ return item.place_key === key; });
+        if(place) openAdminModal(place);
       });
     });
-    $all(".report-tag-btn").forEach(function(btn){
-      btn.addEventListener("click", function(){
-        var card = btn.closest(".card");
-        var panel = card.querySelector(".report-panel");
-        submitTag(card.getAttribute("data-name"), btn.getAttribute("data-tag"), panel.querySelector(".report-counts"));
-      });
+    $all("[data-vote-up]").forEach(function(btn){
+      btn.addEventListener("click", function(){ castVote(btn.getAttribute("data-vote-up"), "up"); });
     });
+    $all("[data-vote-down]").forEach(function(btn){
+      btn.addEventListener("click", function(){ castVote(btn.getAttribute("data-vote-down"), "down"); });
+    });
+    if(isLoggedIn()) loadVoteCounts(list.map(function(p){ return p.place_key; }));
 
     renderMap(list);
   }
@@ -1212,27 +1484,60 @@
   // somewhere without that restriction (e.g. Netlify).
   var kakaoReadyPromise = loadKakaoSDK();
 
+  /* kakaoVerified: null = 아직 확인 전, true = 실제 지도 타일까지 정상적으로 뜬 것을 확인함,
+     false = SDK는 불러왔지만 지도가 뜨지 않는 것으로 확인됨(도메인 미등록 등) — 이후로는
+     계속 재시도하지 않고 예시 지도(SVG)만 보여줘요. 스크립트 로딩 성공만으로는 실제 지도가
+     뜬다고 보장할 수 없어서(예: 카카오 개발자 콘솔에 도메인 등록을 안 하면 스크립트는 정상
+     로드되지만 타일은 안 뜸), "타일이 실제로 그려졌는지"를 별도로 확인한 뒤에만 예시 지도를
+     숨기도록 했어요. */
+  var kakaoVerified = null;
+  var kakaoVerifyTimer = null;
+
+  function revealKakaoMap(){
+    $("#kakaoMapEl").hidden = false;
+    $("#mapSvg").hidden = true;
+    $("#mapCaption").hidden = true;
+    if(kakaoMapInstance) kakaoMapInstance.relayout();
+  }
+
+  function fallbackToSvgMap(){
+    kakaoVerified = false;
+    $("#kakaoMapEl").hidden = true;
+    $("#mapSvg").hidden = false;
+    $("#mapCaption").hidden = false;
+    $("#mapCaption").textContent = "지도는 예시 이미지예요 (카카오 지도를 불러오지 못했어요)";
+  }
+
   function renderMap(list){
     lastMapList = list;
-    renderSvgMap(list); // instant placeholder / permanent fallback
+    renderSvgMap(list); // instant placeholder / permanent fallback — 검증 전엔 항상 이걸 보여줘요
+    if(kakaoVerified === false) return; // 이미 실패로 확인됐으면 다시 시도하지 않아요
     kakaoReadyPromise.then(function(ok){
-      if(ok && lastMapList === list){ renderKakaoMap(list); }
+      if(ok && lastMapList === list && kakaoVerified !== false){ renderKakaoMap(list); }
     });
   }
 
   function renderKakaoMap(list){
     var pts = list.slice(0, 8);
     var el = $("#kakaoMapEl");
-    el.hidden = false;
-    $("#mapSvg").hidden = true;
-    $("#mapCaption").hidden = true;
 
     var kakaoLatLng = pts.length
       ? new kakao.maps.LatLng(pts[0].lat, pts[0].lng)
       : new kakao.maps.LatLng(37.5445, 127.0374);
 
-    if(!kakaoMapInstance){
-      kakaoMapInstance = new kakao.maps.Map(el, { center: kakaoLatLng, level: 5 });
+    var isNewInstance = false;
+    try{
+      if(!kakaoMapInstance){
+        kakaoMapInstance = new kakao.maps.Map(el, { center: kakaoLatLng, level: 5 });
+        isNewInstance = true;
+      }
+    }catch(e){
+      fallbackToSvgMap();
+      return;
+    }
+
+    if(kakaoVerified === true){
+      revealKakaoMap();
     }
     kakaoMapInstance.relayout();
 
@@ -1241,26 +1546,41 @@
 
     if(pts.length === 0){
       kakaoMapInstance.setCenter(kakaoLatLng);
-      return;
+    } else {
+      var bounds = new kakao.maps.LatLngBounds();
+      pts.forEach(function(p){
+        var pos = new kakao.maps.LatLng(p.lat, p.lng);
+        var marker = new kakao.maps.Marker({ position: pos, map: kakaoMapInstance });
+        var info = new kakao.maps.InfoWindow({
+          content: '<div style="padding:6px 10px;font-size:12px;white-space:nowrap;">' + escapeHtml(p.name) + '</div>'
+        });
+        kakao.maps.event.addListener(marker, "click", function(){ info.open(kakaoMapInstance, marker); });
+        kakaoMarkers.push(marker);
+        bounds.extend(pos);
+      });
+
+      if(pts.length > 1){
+        kakaoMapInstance.setBounds(bounds);
+      } else {
+        kakaoMapInstance.setCenter(kakaoLatLng);
+        kakaoMapInstance.setLevel(4);
+      }
     }
 
-    var bounds = new kakao.maps.LatLngBounds();
-    pts.forEach(function(p){
-      var pos = new kakao.maps.LatLng(p.lat, p.lng);
-      var marker = new kakao.maps.Marker({ position: pos, map: kakaoMapInstance });
-      var info = new kakao.maps.InfoWindow({
-        content: '<div style="padding:6px 10px;font-size:12px;white-space:nowrap;">' + escapeHtml(p.name) + '</div>'
+    /* 처음 만든 지도라면, 실제로 타일이 그려지는지 한 번만 확인해요.
+       'tilesloaded'가 뜨면 진짜 지도가 뜬 것 — 그때 예시 지도를 숨겨요.
+       일정 시간 안에 안 뜨면(도메인 미등록 등) 예시 지도를 계속 보여줘요. */
+    if(isNewInstance && kakaoVerified === null){
+      kakao.maps.event.addListener(kakaoMapInstance, "tilesloaded", function(){
+        if(kakaoVerified === true) return;
+        kakaoVerified = true;
+        clearTimeout(kakaoVerifyTimer);
+        revealKakaoMap();
       });
-      kakao.maps.event.addListener(marker, "click", function(){ info.open(kakaoMapInstance, marker); });
-      kakaoMarkers.push(marker);
-      bounds.extend(pos);
-    });
-
-    if(pts.length > 1){
-      kakaoMapInstance.setBounds(bounds);
-    } else {
-      kakaoMapInstance.setCenter(kakaoLatLng);
-      kakaoMapInstance.setLevel(4);
+      clearTimeout(kakaoVerifyTimer);
+      kakaoVerifyTimer = setTimeout(function(){
+        if(kakaoVerified !== true) fallbackToSvgMap();
+      }, 3000);
     }
   }
 
@@ -1337,19 +1657,23 @@
   }
 
   /* ranking list */
-  var RANK = PLACES.slice(0, 5);
-  $("#rankList").innerHTML = RANK.map(function(p, i){
-    return (
-      '<div class="rank-item">' +
-        '<div class="rank-num">' + (i+1) + '</div>' +
-        '<div class="rank-body">' +
-          '<div class="rank-name">' + escapeHtml(p.name) + '</div>' +
-          '<div class="rank-meta">' + escapeHtml(p.region) + ' · ' + escapeHtml(p.menu) + '</div>' +
-        '</div>' +
-        '<span class="rank-tag">' + (p.cat === "카페" ? "☕ 카페" : "🍚 식당") + '</span>' +
-      '</div>'
-    );
-  }).join("");
+  function renderRank(){
+    var rank = PLACES.slice(0, 5);
+    $("#rankList").innerHTML = rank.map(function(p, i){
+      return (
+        '<div class="rank-item">' +
+          '<div class="rank-num">' + (i+1) + '</div>' +
+          '<div class="rank-body">' +
+            '<div class="rank-name">' + escapeHtml(p.name) + '</div>' +
+            '<div class="rank-meta">' + escapeHtml(p.region) + ' · ' + escapeHtml(p.menu) + '</div>' +
+          '</div>' +
+          '<span class="source-badge ' + (p.is_petch_verified ? 'verified' : 'public') + '">' +
+            (p.is_petch_verified ? '✓ PETCH' : '공공데이터') + '</span>' +
+        '</div>'
+      );
+    }).join("");
+  }
+  renderRank();
 
 })();
 </script>
