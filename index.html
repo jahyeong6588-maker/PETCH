@@ -1,4 +1,6 @@
 <title>PETCH</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.9/dist/umd/supabase.js"></script>
 <style>
   :root{
     --bg:#ffffff;
@@ -17,6 +19,8 @@
     --pin:#3b82f6;
     --outer-bg:#e7ebe6;
     --shadow:0 1px 2px rgba(20,24,22,0.04), 0 8px 24px rgba(20,24,22,0.06);
+    --font-body:"SUIT Variable","SUIT","Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    --font-display:"Bagel Fat One",var(--font-body);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -63,7 +67,7 @@
   body{
     background:var(--outer-bg);
     color:var(--ink);
-    font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","SUIT",sans-serif;
+    font-family:var(--font-body);
     -webkit-font-smoothing:antialiased;
     line-height:1.5;
     display:flex;
@@ -95,22 +99,26 @@
 
   /* header */
   header{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:20;}
-  .header-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;}
-  .brand{display:flex;flex-direction:column;gap:2px;}
-  .brand-mark{display:flex;align-items:center;gap:6px;font-weight:900;font-size:22px;letter-spacing:-0.02em;}
+  .header-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 0;}
+  .brand{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 auto;}
+  .brand-mark{display:flex;align-items:center;gap:6px;font-family:var(--font-display);font-weight:900;font-size:22px;letter-spacing:-0.01em;white-space:nowrap;}
   .brand-mark svg{flex:none;}
-  .brand-tag{font-size:11.5px;color:var(--muted-2);letter-spacing:0.02em;}
-  .header-actions{display:flex;align-items:center;gap:8px;flex:none;}
-  .loc-pill{display:flex;align-items:center;gap:5px;background:none;border:none;color:var(--muted);font-size:12.5px;text-align:right;line-height:1.25;padding:6px 4px;max-width:92px;}
+  .brand-tag{font-size:11.5px;color:var(--muted-2);letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .header-actions{display:flex;align-items:center;gap:6px;flex:none;}
+  .loc-pill{display:flex;align-items:center;gap:4px;background:none;border:none;color:var(--muted);font-size:12px;padding:6px 2px;max-width:min(26vw,110px);min-width:0;}
   .loc-pill svg{flex:none;color:var(--accent);}
-  .login-btn{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px 18px;font-weight:700;font-size:13px;white-space:nowrap;}
-  .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;flex:none;}
+  .loc-pill span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+  .login-btn{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px clamp(10px,3.5vw,18px);font-weight:700;font-size:13px;white-space:nowrap;flex:none;}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;flex:none;}
+  @media (max-width:360px){
+    .brand-tag{display:none;}
+  }
 
   /* hero */
   .hero{padding:36px 0 20px;}
   .hero-kicker{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;color:var(--ink);flex-wrap:wrap;}
-  .hero-kicker .badge{background:var(--accent);color:#06210f;font-weight:900;font-style:italic;letter-spacing:-0.01em;padding:4px 10px;border-radius:8px;font-size:16px;}
-  .hero-h1{font-size:28px;font-weight:900;letter-spacing:-0.02em;margin:10px 0 8px;text-wrap:balance;}
+  .hero-kicker .badge{font-family:var(--font-display);background:var(--accent);color:#06210f;font-weight:900;letter-spacing:0.01em;padding:5px 10px 3px;border-radius:8px;font-size:16px;line-height:1;}
+  .hero-h1{font-family:var(--font-display);font-size:26px;font-weight:900;letter-spacing:-0.01em;margin:12px 0 8px;text-wrap:balance;word-break:keep-all;}
   .hero-sub{color:var(--muted);font-size:14.5px;margin:0;}
 
   .chip-row{display:flex;gap:8px;overflow-x:auto;padding:18px 0 4px;scrollbar-width:none;}
@@ -149,11 +157,11 @@
   .care-toggle{flex:none;display:flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:12px 14px;font-weight:800;font-size:13px;white-space:nowrap;}
   .care-toggle input{width:18px;height:18px;accent-color:var(--accent);}
 
-  .cta{width:100%;margin-top:24px;background:var(--ink);color:var(--bg);border:none;border-radius:16px;padding:18px;font-weight:900;font-size:16px;letter-spacing:0.04em;font-style:italic;}
+  .cta{width:100%;margin-top:24px;background:var(--ink);color:var(--bg);border:none;border-radius:16px;padding:18px;font-family:var(--font-display);font-weight:900;font-size:15px;letter-spacing:0.03em;}
   .cta:active{transform:translateY(1px);}
 
   /* ranking */
-  .section-title{font-size:19px;font-weight:900;margin:44px 0 4px;letter-spacing:-0.01em;}
+  .section-title{font-family:var(--font-display);font-size:18px;font-weight:900;margin:44px 0 4px;letter-spacing:0;word-break:keep-all;}
   .section-sub{font-size:12.5px;color:var(--muted-2);margin:0 0 16px;}
   .rank-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden;}
   .rank-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);}
@@ -178,7 +186,7 @@
     .modal{border-radius:24px;max-height:86vh;}
   }
   .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
-  .modal-title{font-size:20px;font-weight:900;margin:0;}
+  .modal-title{font-family:var(--font-display);font-size:19px;font-weight:900;margin:0;word-break:keep-all;}
   .modal-close{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;}
   .view-tabs{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;}
   .view-tabs::-webkit-scrollbar{display:none;}
@@ -187,6 +195,7 @@
 
   .map-box{margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface-soft);position:relative;}
   .map-box svg{display:block;width:100%;height:200px;}
+  .kakao-map{width:100%;height:200px;}
   .map-caption{position:absolute;left:10px;bottom:8px;background:rgba(255,255,255,0.85);color:var(--muted);font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;}
   :root[data-theme="dark"] .map-caption{background:rgba(20,24,22,0.75);}
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .map-caption{background:rgba(20,24,22,0.75);}}
@@ -218,6 +227,13 @@
   .btn-dark{background:var(--ink);color:var(--bg);}
   .btn-outline{background:var(--surface);border:1px solid var(--line) !important;color:var(--ink);}
 
+  .report-panel{margin-top:10px;padding-top:12px;border-top:1px dashed var(--line);}
+  .report-label{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 8px;}
+  .report-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .report-tag-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;font-size:11.5px;font-weight:700;}
+  .report-tag-btn:active{background:var(--accent-soft);border-color:var(--accent);}
+  .report-counts{font-size:11.5px;color:var(--muted);margin-top:8px;min-height:1.4em;}
+
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:700;box-shadow:var(--shadow);z-index:200;opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
 
@@ -237,9 +253,9 @@
       <div class="brand-tag">Pet-Friendly Dining Finder</div>
     </div>
     <div class="header-actions">
-      <button class="loc-pill" id="locPillBtn">
+      <button class="loc-pill" id="locPillBtn" title="서울 성동구 성수동">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
-        <span id="locLabel">서울 성동구<br/>성수동</span>
+        <span id="locLabel">서울 성동구 성수동</span>
       </button>
       <button class="login-btn" id="loginBtn">로그인</button>
       <button class="icon-btn" id="favShortcutBtn" aria-label="즐겨찾기 목록">
@@ -382,8 +398,9 @@
       <button type="button" data-view="only">카페만 보기</button>
     </div>
     <div class="map-box">
+      <div id="kakaoMapEl" class="kakao-map" hidden></div>
       <svg id="mapSvg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="검색 결과 위치 지도"></svg>
-      <span class="map-caption">지도는 예시 이미지예요</span>
+      <span class="map-caption" id="mapCaption">지도는 예시 이미지예요</span>
     </div>
     <p class="result-meta" id="resultMeta"></p>
     <div class="result-list" id="resultList"></div>
@@ -436,6 +453,47 @@
     showToast._tm = setTimeout(function(){ t.classList.remove("show"); }, 1800);
   }
 
+  /* ---- Supabase: shared "정보 추가" reports from real visitors ----
+     Uses a publishable (client-safe) key, same idea as the Kakao JS key —
+     safe to ship in the page. Requires a `place_tags` table with public
+     read/insert policies; see README for the SQL to run once in the
+     Supabase SQL editor. Every call is wrapped so a missing table or a
+     network hiccup just shows a toast instead of breaking the page. */
+  var SUPABASE_URL = "https://gddmhlukbpnyjgynpfip.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_Ca-ruz-FBOPaKpbhjiga6A_kPCLBSqu";
+  var REPORT_TAGS = ["야외테라스", "놀이공간", "배변봉투 제공", "주차장"];
+  var supabaseClient = null;
+  try{
+    if(window.supabase && window.supabase.createClient){
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  }catch(e){ supabaseClient = null; }
+
+  function submitTag(placeName, tag, countsEl){
+    if(!supabaseClient){ showToast("지금은 정보를 저장할 수 없어요"); return; }
+    supabaseClient.from("place_tags").insert({ place_name: placeName, tag: tag }).then(function(res){
+      if(res && res.error){
+        showToast("아직 저장 준비가 안 됐어요 (테이블 설정을 확인해주세요)");
+        return;
+      }
+      showToast("제보 감사해요 🐾");
+      loadTagCounts(placeName, countsEl);
+    }).catch(function(){ showToast("저장 중 문제가 생겼어요"); });
+  }
+
+  function loadTagCounts(placeName, countsEl){
+    if(!countsEl) return;
+    if(!supabaseClient){ countsEl.textContent = ""; return; }
+    countsEl.textContent = "불러오는 중…";
+    supabaseClient.from("place_tags").select("tag").eq("place_name", placeName).then(function(res){
+      if(!res || res.error || !res.data){ countsEl.textContent = ""; return; }
+      var counts = {};
+      res.data.forEach(function(row){ counts[row.tag] = (counts[row.tag] || 0) + 1; });
+      var parts = Object.keys(counts).map(function(k){ return k + " " + counts[k] + "회"; });
+      countsEl.textContent = parts.length ? ("지금까지 제보: " + parts.join(", ")) : "아직 제보가 없어요 — 첫 제보를 남겨보세요!";
+    }).catch(function(){ countsEl.textContent = ""; });
+  }
+
   /* segment: 식당/카페 */
   $("#segFood").addEventListener("click", function(){ setCat("식당"); });
   $("#segCafe").addEventListener("click", function(){ setCat("카페"); });
@@ -471,7 +529,8 @@
     var v = $("#regionInput").value.trim();
     if(!v){ showToast("지역을 입력해주세요"); return; }
     state.region = v;
-    $("#locLabel").innerHTML = escapeHtml(v).replace(/ /g, "<br/>");
+    $("#locLabel").textContent = v;
+    $("#locPillBtn").title = v;
     showToast(v + " 근처로 지역을 설정했어요");
   });
 
@@ -617,7 +676,14 @@
             (tags.length ? '<div class="tag-row">' + tags.map(function(t){ return '<span class="mini-tag">' + t + '</span>'; }).join("") + '</div>' : '') +
             '<div class="card-actions">' +
               '<a class="btn-dark" href="https://map.kakao.com/link/search/' + mapQ + '" target="_blank" rel="noopener">지도에서 보기</a>' +
-              '<button type="button" class="btn-outline" data-info="' + escapeHtml(p.name) + '">정보 추가</button>' +
+              '<button type="button" class="btn-outline" data-info-toggle="' + escapeHtml(p.name) + '">정보 추가</button>' +
+            '</div>' +
+            '<div class="report-panel" hidden>' +
+              '<p class="report-label">방문해보셨다면 알려주세요</p>' +
+              '<div class="report-tags">' +
+                REPORT_TAGS.map(function(t){ return '<button type="button" class="report-tag-btn" data-tag="' + t + '">' + t + '</button>'; }).join("") +
+              '</div>' +
+              '<div class="report-counts" aria-live="polite"></div>' +
             '</div>' +
           '</div>'
         );
@@ -633,16 +699,138 @@
         renderResults();
       });
     });
-    $all("[data-info]").forEach(function(btn){
+    $all("[data-info-toggle]").forEach(function(btn){
       btn.addEventListener("click", function(){
-        showToast("실제 서비스에서는 이용자가 직접 정보를 추가할 수 있어요");
+        var card = btn.closest(".card");
+        var panel = card.querySelector(".report-panel");
+        panel.hidden = !panel.hidden;
+        if(!panel.hidden){
+          loadTagCounts(btn.getAttribute("data-info-toggle"), panel.querySelector(".report-counts"));
+        }
+      });
+    });
+    $all(".report-tag-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var card = btn.closest(".card");
+        var panel = card.querySelector(".report-panel");
+        submitTag(card.getAttribute("data-name"), btn.getAttribute("data-tag"), panel.querySelector(".report-counts"));
       });
     });
 
     renderMap(list);
   }
 
+  /* ---- Kakao Maps: real map when the SDK is reachable, schematic SVG otherwise ---- */
+  var KAKAO_APP_KEY = "41ca7a4b49cdde8d38500f1f9f856318";
+  var kakaoState = "pending"; // "pending" | "ready" | "failed"
+  var kakaoMapInstance = null;
+  var kakaoMarkers = [];
+  var lastMapList = [];
+
+  function loadKakaoSDK(){
+    return new Promise(function(resolve){
+      if(window.kakao && window.kakao.maps && window.kakao.maps.Map){
+        kakaoState = "ready";
+        resolve(true);
+        return;
+      }
+      var settled = false;
+      var timer = setTimeout(function(){
+        if(settled) return;
+        settled = true;
+        kakaoState = "failed";
+        resolve(false);
+      }, 4000);
+      var script = document.createElement("script");
+      script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" + KAKAO_APP_KEY + "&libraries=services&autoload=false";
+      script.onload = function(){
+        if(settled) return;
+        if(window.kakao && window.kakao.maps){
+          window.kakao.maps.load(function(){
+            if(settled) return;
+            settled = true;
+            clearTimeout(timer);
+            kakaoState = "ready";
+            resolve(true);
+          });
+        } else {
+          settled = true;
+          clearTimeout(timer);
+          kakaoState = "failed";
+          resolve(false);
+        }
+      };
+      script.onerror = function(){
+        if(settled) return;
+        settled = true;
+        clearTimeout(timer);
+        kakaoState = "failed";
+        resolve(false);
+      };
+      document.head.appendChild(script);
+    });
+  }
+  // Kick this off once at load time so the SDK (if reachable) is usually
+  // ready by the time the user opens the results modal. On claude.ai's
+  // artifact preview, external scripts outside its CDN allowlist are
+  // blocked, so this quietly fails and the schematic SVG map is used
+  // instead — the real Kakao map renders once this file is deployed
+  // somewhere without that restriction (e.g. Netlify).
+  var kakaoReadyPromise = loadKakaoSDK();
+
   function renderMap(list){
+    lastMapList = list;
+    renderSvgMap(list); // instant placeholder / permanent fallback
+    kakaoReadyPromise.then(function(ok){
+      if(ok && lastMapList === list){ renderKakaoMap(list); }
+    });
+  }
+
+  function renderKakaoMap(list){
+    var pts = list.slice(0, 8);
+    var el = $("#kakaoMapEl");
+    el.hidden = false;
+    $("#mapSvg").hidden = true;
+    $("#mapCaption").hidden = true;
+
+    var kakaoLatLng = pts.length
+      ? new kakao.maps.LatLng(pts[0].lat, pts[0].lng)
+      : new kakao.maps.LatLng(37.5445, 127.0374);
+
+    if(!kakaoMapInstance){
+      kakaoMapInstance = new kakao.maps.Map(el, { center: kakaoLatLng, level: 5 });
+    }
+    kakaoMapInstance.relayout();
+
+    kakaoMarkers.forEach(function(m){ m.setMap(null); });
+    kakaoMarkers = [];
+
+    if(pts.length === 0){
+      kakaoMapInstance.setCenter(kakaoLatLng);
+      return;
+    }
+
+    var bounds = new kakao.maps.LatLngBounds();
+    pts.forEach(function(p){
+      var pos = new kakao.maps.LatLng(p.lat, p.lng);
+      var marker = new kakao.maps.Marker({ position: pos, map: kakaoMapInstance });
+      var info = new kakao.maps.InfoWindow({
+        content: '<div style="padding:6px 10px;font-size:12px;white-space:nowrap;">' + escapeHtml(p.name) + '</div>'
+      });
+      kakao.maps.event.addListener(marker, "click", function(){ info.open(kakaoMapInstance, marker); });
+      kakaoMarkers.push(marker);
+      bounds.extend(pos);
+    });
+
+    if(pts.length > 1){
+      kakaoMapInstance.setBounds(bounds);
+    } else {
+      kakaoMapInstance.setCenter(kakaoLatLng);
+      kakaoMapInstance.setLevel(4);
+    }
+  }
+
+  function renderSvgMap(list){
     var svg = $("#mapSvg");
     var pts = list.slice(0, 8);
     var W = 400, H = 200, PAD = 34;
