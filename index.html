@@ -288,10 +288,84 @@
     <div class="field">
       <p class="field-label">찾는 지역</p>
       <div class="loc-input-row">
-        <input class="text-input" id="regionInput" type="text" value="성수동" placeholder="예: 강남구, 연남동" />
+        <div class="select-wrap" style="flex:1;">
+          <select class="text-input" id="regionInput">
+        <optgroup label="서울">
+          <option value="강남구 논현동">강남구 논현동</option>
+          <option value="강남구 신사동">강남구 신사동</option>
+          <option value="강동구 성내동">강동구 성내동</option>
+          <option value="강동구 천호동">강동구 천호동</option>
+          <option value="강북구 수유동">강북구 수유동</option>
+          <option value="강서구 등촌동">강서구 등촌동</option>
+          <option value="강서구 마곡동">강서구 마곡동</option>
+          <option value="관악구 봉천동">관악구 봉천동</option>
+          <option value="관악구 신림동">관악구 신림동</option>
+          <option value="광진구 능동">광진구 능동</option>
+          <option value="광진구 중곡동">광진구 중곡동</option>
+          <option value="구로구 개봉동">구로구 개봉동</option>
+          <option value="구로구 구로동">구로구 구로동</option>
+          <option value="금천구 가산동">금천구 가산동</option>
+          <option value="금천구 독산동">금천구 독산동</option>
+          <option value="노원구 공릉동">노원구 공릉동</option>
+          <option value="노원구 월계동">노원구 월계동</option>
+          <option value="도봉구 방학동">도봉구 방학동</option>
+          <option value="동대문구 장안동">동대문구 장안동</option>
+          <option value="동대문구 전농동">동대문구 전농동</option>
+          <option value="동작구 사당동">동작구 사당동</option>
+          <option value="마포구 신수동">마포구 신수동</option>
+          <option value="마포구 연남동">마포구 연남동</option>
+          <option value="서대문구 북가좌동">서대문구 북가좌동</option>
+          <option value="서대문구 북아현동">서대문구 북아현동</option>
+          <option value="서초구 반포동">서초구 반포동</option>
+          <option value="서초구 방배동">서초구 방배동</option>
+          <option value="성동구 성수동" selected>성동구 성수동</option>
+          <option value="성북구 보문동">성북구 보문동</option>
+          <option value="성북구 하월곡동">성북구 하월곡동</option>
+          <option value="송파구 방이동">송파구 방이동</option>
+          <option value="송파구 송파동">송파구 송파동</option>
+          <option value="양천구 목동">양천구 목동</option>
+          <option value="양천구 신월동">양천구 신월동</option>
+          <option value="영등포구 양평동">영등포구 양평동</option>
+          <option value="영등포구 여의도동">영등포구 여의도동</option>
+          <option value="용산구 갈월동">용산구 갈월동</option>
+          <option value="용산구 한남동">용산구 한남동</option>
+          <option value="은평구 신사동">은평구 신사동</option>
+          <option value="은평구 응암동">은평구 응암동</option>
+          <option value="종로구 계동">종로구 계동</option>
+          <option value="종로구 내자동">종로구 내자동</option>
+          <option value="중구 신당동">중구 신당동</option>
+          <option value="중구 황학동">중구 황학동</option>
+          <option value="중랑구 망우동">중랑구 망우동</option>
+          <option value="중랑구 상봉동">중랑구 상봉동</option>
+        </optgroup>
+        <optgroup label="제주">
+          <option value="제주 서귀포시 안덕면">제주 서귀포시 안덕면</option>
+          <option value="제주 제주시 조천읍">제주 제주시 조천읍</option>
+          <option value="제주 제주시 한림읍">제주 제주시 한림읍</option>
+        </optgroup>
+        <optgroup label="강원">
+          <option value="강원 강릉시 강문동">강원 강릉시 강문동</option>
+          <option value="강원 강릉시 주문진읍">강원 강릉시 주문진읍</option>
+          <option value="강원 양양군 손양면">강원 양양군 손양면</option>
+          <option value="강원 춘천시 신북읍">강원 춘천시 신북읍</option>
+        </optgroup>
+        <optgroup label="부산">
+          <option value="부산 서구 아미동">부산 서구 아미동</option>
+          <option value="부산 수영구 광안동">부산 수영구 광안동</option>
+          <option value="부산 해운대구 우동">부산 해운대구 우동</option>
+          <option value="부산 해운대구 중동">부산 해운대구 중동</option>
+        </optgroup>
+        <optgroup label="경기">
+          <option value="경기 김포시 월곶면">경기 김포시 월곶면</option>
+          <option value="경기 동두천시 생연동">경기 동두천시 생연동</option>
+          <option value="경기 시흥시 정왕동">경기 시흥시 정왕동</option>
+          <option value="경기 용인시 기흥구 신갈동">경기 용인시 기흥구 신갈동</option>
+        </optgroup>
+          </select>
+        </div>
         <button class="search-btn" type="button" id="regionSearchBtn">검색</button>
       </div>
-      <p class="hint">가게 정보는 방문자 제보와 리뷰 태그 기반이에요 — 최신 동반 가능 여부는 매장에 확인해주세요.</p>
+      <p class="hint">식품안전나라에 등록된 반려동물 동반출입 음식점 데이터를 바탕으로 지역을 골라보세요. 편의시설 정보는 방문자 제보 기반이라 아직 적을 수 있어요.</p>
     </div>
 
     <div class="field">
@@ -371,13 +445,13 @@
   </form>
 
   <h2 class="section-title">지금 반려인들이 많이 찾는 곳</h2>
-  <p class="section-sub">※ 아래 순위는 예시 데이터예요. 실제 이용 데이터가 쌓이면 실시간 순위로 교체할게요.</p>
+  <p class="section-sub">※ 순위 자체는 예시예요 (방문 데이터가 쌓이면 실시간으로 교체할게요), 업소 목록은 식품안전나라 등록 데이터를 사용했어요.</p>
   <div class="rank-list" id="rankList"></div>
 
   <footer>
     <div class="wrap footer-row">
       <div class="footer-brand">PETCH · 우리 아이와 함께하는 외식은 PET!</div>
-      <div>본 사이트의 반려동반 가능 여부·편의시설 정보는 예시 데이터이며, 실제 서비스에서는 사용자 제보와 리뷰로 채워집니다.</div>
+      <div>업소 목록은 식품의약품안전처 식품안전나라의 "반려동물 동반 가능 업소" 등록 데이터를 사용했어요. 편의시설(테라스·놀이공간 등) 정보는 방문자 제보 기반이라 아직 적을 수 있어요.</div>
       <div>방문 전 매장에 반려동물 동반 가능 여부를 다시 한번 확인해주세요.</div>
     </div>
   </footer>
@@ -414,23 +488,75 @@
   "use strict";
 
   var PLACES = [
-    {name:"성수 마당집", cat:"식당", menu:"한식", region:"성동구 성수동", addr:"서울 성동구 성수이로 12길 8", phone:"02-467-1023", size:"대형견", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:true, lat:37.5445, lng:127.0565, icon:"🍚"},
-    {name:"도그하우스 브런치", cat:"카페", menu:"브런치", region:"마포구 연남동", addr:"서울 마포구 성미산로 29", phone:"02-332-8841", size:"전체", animal:"강아지", comp:"실내동반", terrace:false, play:true, bag:true, parking:false, lat:37.5615, lng:126.9257, icon:"🥐"},
-    {name:"발자국 파스타", cat:"식당", menu:"양식", region:"용산구 이태원동", addr:"서울 용산구 이태원로 45길 6", phone:"02-749-2210", size:"중형견", animal:"강아지", comp:"실내동반", terrace:true, play:false, bag:false, parking:false, lat:37.5346, lng:126.9946, icon:"🍝"},
-    {name:"멍냥정원 카페", cat:"카페", menu:"카페 · 디저트", region:"서초구 방배동", addr:"서울 서초구 동광로 34", phone:"02-521-7789", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.4818, lng:126.9926, icon:"🐾"},
-    {name:"산책 끝 냉면집", cat:"식당", menu:"한식", region:"강남구 압구정동", addr:"서울 강남구 압구정로 20길 11", phone:"02-548-3302", size:"소형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:false, parking:false, lat:37.5274, lng:127.0287, icon:"🍜"},
-    {name:"캣초코 디저트", cat:"카페", menu:"카페 · 디저트", region:"종로구 익선동", addr:"서울 종로구 수표로 28길 4", phone:"02-765-9012", size:"전체", animal:"고양이", comp:"실내동반", terrace:false, play:true, bag:false, parking:false, lat:37.5731, lng:126.9910, icon:"🐈"},
-    {name:"한강뷰 숯불집", cat:"식당", menu:"고기 · 술집", region:"영등포구 여의도동", addr:"서울 영등포구 여의동로 330", phone:"02-782-4410", size:"대형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:true, parking:true, lat:37.5260, lng:126.9243, icon:"🍖"},
-    {name:"포레스트 브런치하우스", cat:"카페", menu:"브런치", region:"성동구 서울숲", addr:"서울 성동구 서울숲2길 44", phone:"02-465-6620", size:"대형견", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.5443, lng:127.0374, icon:"🥐"},
-    {name:"우동한그릇", cat:"식당", menu:"양식", region:"마포구 합정동", addr:"서울 마포구 양화로 45", phone:"02-323-1188", size:"소형견", animal:"강아지", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5497, lng:126.9139, icon:"🍜"},
-    {name:"댕댕베이커리 카페", cat:"카페", menu:"카페 · 디저트", region:"송파구 방이동", addr:"서울 송파구 백제고분로 45길 9", phone:"02-403-7745", size:"전체", animal:"강아지", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.5111, lng:127.1128, icon:"🧁"},
-    {name:"연희동 파스타공방", cat:"식당", menu:"양식", region:"서대문구 연희동", addr:"서울 서대문구 연희로 22길 15", phone:"02-338-5567", size:"중형견", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5665, lng:126.9346, icon:"🍝"},
-    {name:"양지말화로구이", cat:"식당", menu:"고기 · 술집", region:"강남구 논현동", addr:"서울 강남구 논현로 15길 8", phone:"02-544-9091", size:"소형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:false, parking:true, lat:37.5108, lng:127.0293, icon:"🍖"},
-    {name:"티하우스 마루", cat:"카페", menu:"카페 · 디저트", region:"종로구 삼청동", addr:"서울 종로구 삼청로 9길 3", phone:"02-733-2201", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:false, bag:true, parking:false, lat:37.5826, lng:126.9819, icon:"🍵"},
-    {name:"소소식당", cat:"식당", menu:"한식", region:"강동구 천호동", addr:"서울 강동구 천호대로 1097", phone:"02-488-3021", size:"중형견", animal:"강아지", comp:"실내동반", terrace:false, play:true, bag:false, parking:true, lat:37.5384, lng:127.1237, icon:"🍚"}
+    {name:"(주)툭툭누들타이(티티그릴)", cat:"식당", menu:"양식", region:"강남구 신사동", addr:"서울특별시 강남구 논현로152길 37", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51618, lng:127.04719, icon:"🍝"},
+    {name:"독스아일랜드 논현", cat:"카페", menu:"카페 · 디저트", region:"강남구 논현동", addr:"서울특별시 강남구 학동로33길 24", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51201, lng:127.04606, icon:"☕"},
+    {name:"DRIFTWOOD(드리프트우드)", cat:"식당", menu:"한식", region:"강동구 성내동", addr:"서울특별시 강동구 풍성로41길 95", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53469, lng:127.12654, icon:"🍚"},
+    {name:"마시쓰(massiss)", cat:"카페", menu:"카페 · 디저트", region:"강동구 천호동", addr:"서울특별시 강동구 천호대로151길 31", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53073, lng:127.12318, icon:"☕"},
+    {name:"라라브레드&키친 수유", cat:"식당", menu:"한식", region:"강북구 수유동", addr:"서울특별시 강북구 노해로14길 8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.63758, lng:127.01974, icon:"🍚"},
+    {name:"하우스 라로바", cat:"카페", menu:"카페 · 디저트", region:"강북구 수유동", addr:"서울특별시 강북구 인수봉로 310", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.63407, lng:127.02824, icon:"☕"},
+    {name:"the whatever(더 왓에버)", cat:"식당", menu:"한식", region:"강서구 마곡동", addr:"서울특별시 강서구 마곡중앙2로 15", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5531, lng:126.85046, icon:"🍚"},
+    {name:"INNER PEACE(이너피스)", cat:"카페", menu:"카페 · 디저트", region:"강서구 등촌동", addr:"서울특별시 강서구 양천로66길 6", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.54551, lng:126.85479, icon:"☕"},
+    {name:"Spring moment(스프링 모먼트)", cat:"식당", menu:"한식", region:"관악구 봉천동", addr:"서울특별시 관악구 낙성대역3길 24", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.47639, lng:126.94778, icon:"🍚"},
+    {name:"POPO archive(포포 아카이브)", cat:"카페", menu:"카페 · 디저트", region:"관악구 신림동", addr:"서울특별시 관악구 신림로36길 10", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.47362, lng:126.94622, icon:"☕"},
+    {name:"구십이도", cat:"식당", menu:"한식", region:"광진구 능동", addr:"서울특별시 광진구 천호대로110길 40", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53914, lng:127.07692, icon:"🍚"},
+    {name:"굿띵(Good Thing)", cat:"카페", menu:"카페 · 디저트", region:"광진구 중곡동", addr:"서울특별시 광진구 영화사로 51", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53692, lng:127.07801, icon:"☕"},
+    {name:"문전성시", cat:"식당", menu:"한식", region:"구로구 구로동", addr:"서울특별시 구로구 디지털로32길 87", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.48977, lng:126.8857, icon:"🍚"},
+    {name:"An coffee 안커피", cat:"카페", menu:"카페 · 디저트", region:"구로구 개봉동", addr:"서울특별시 구로구 고척로22길 74", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.49173, lng:126.88179, icon:"☕"},
+    {name:"과일 데일리프룻 금천점", cat:"식당", menu:"한식", region:"금천구 독산동", addr:"서울특별시 금천구 가산로 71", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.44973, lng:126.9052, icon:"🍚"},
+    {name:"밤앤송 카페", cat:"카페", menu:"카페 · 디저트", region:"금천구 가산동", addr:"서울특별시 금천구 시흥대로153길 72", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.45072, lng:126.89649, icon:"☕"},
+    {name:"망고정(월계점)", cat:"식당", menu:"한식", region:"노원구 월계동", addr:"서울특별시 노원구 월계로55길 64", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.65857, lng:127.0531, icon:"🍚"},
+    {name:"꽁냥꽁냥", cat:"카페", menu:"카페 · 디저트", region:"노원구 공릉동", addr:"서울특별시 노원구 동일로 1058", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.65214, lng:127.05632, icon:"☕"},
+    {name:"삼보 수제갈비", cat:"식당", menu:"고기 · 술집", region:"도봉구 방학동", addr:"서울특별시 도봉구 방학로 283", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.66329, lng:127.04432, icon:"🍖"},
+    {name:"오카페(O'Cafe)", cat:"카페", menu:"카페 · 디저트", region:"도봉구 방학동", addr:"서울특별시 도봉구 도봉로145길 78", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.67058, lng:127.05123, icon:"☕"},
+    {name:"그리팅(Greetin')", cat:"식당", menu:"한식", region:"동대문구 장안동", addr:"서울특별시 동대문구 천호대로83길 9", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57634, lng:127.03692, icon:"🍚"},
+    {name:"베이비 피그 Baby Pig", cat:"카페", menu:"카페 · 디저트", region:"동대문구 전농동", addr:"서울특별시 동대문구 전농로 233", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57388, lng:127.0365, icon:"☕"},
+    {name:"(주) 세녹코리아", cat:"식당", menu:"한식", region:"동작구 사당동", addr:"서울특별시 동작구 사당로 304", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.50913, lng:126.93721, icon:"🍚"},
+    {name:"정우 티하우스", cat:"카페", menu:"카페 · 디저트", region:"동작구 사당동", addr:"서울특별시 동작구 동작대로9가길 18-1", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.50916, lng:126.93818, icon:"☕"},
+    {name:"(주)커피 리브레", cat:"식당", menu:"카페 · 디저트", region:"마포구 연남동", addr:"서울특별시 마포구 성미산로29길 17-8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57011, lng:126.90626, icon:"☕"},
+    {name:"깔롱", cat:"카페", menu:"카페 · 디저트", region:"마포구 신수동", addr:"서울특별시 마포구 독막로 237", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56835, lng:126.89971, icon:"☕"},
+    {name:"LUV PLUTO 러브 플루토", cat:"식당", menu:"한식", region:"서대문구 북가좌동", addr:"서울특별시 서대문구 불광천길 180", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.58406, lng:126.94204, icon:"🍚"},
+    {name:"고몽순 커피", cat:"카페", menu:"카페 · 디저트", region:"서대문구 북아현동", addr:"서울특별시 서대문구 신촌로29길 16", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57668, lng:126.93555, icon:"☕"},
+    {name:"Always on(올웨이즈온)", cat:"식당", menu:"한식", region:"서초구 방배동", addr:"서울특별시 서초구 방배천로8길 16-12", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.48778, lng:127.02884, icon:"🍚"},
+    {name:"덕(DUCK)", cat:"카페", menu:"카페 · 디저트", region:"서초구 반포동", addr:"서울특별시 서초구 서래로6길 10", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.48562, lng:127.03603, icon:"☕"},
+    {name:"(주)플레이버타운", cat:"식당", menu:"한식", region:"성동구 성수동", addr:"서울특별시 성동구 서울숲4길 18-7", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56909, lng:127.03596, icon:"🍚"},
+    {name:"그레이 펭귄 커피", cat:"카페", menu:"카페 · 디저트", region:"성동구 성수동", addr:"서울특별시 성동구 서울숲4길 26-14", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56783, lng:127.03966, icon:"☕"},
+    {name:"pold coffee(폴드커피)", cat:"식당", menu:"카페 · 디저트", region:"성북구 하월곡동", addr:"서울특별시 성북구 종암로 214-3", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.58677, lng:127.01147, icon:"☕"},
+    {name:"르쿠에르", cat:"카페", menu:"카페 · 디저트", region:"성북구 보문동", addr:"서울특별시 성북구 고려대로6길 74", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.58561, lng:127.01312, icon:"☕"},
+    {name:"(주)커피빈코리아 몽촌토성역점", cat:"식당", menu:"카페 · 디저트", region:"송파구 방이동", addr:"서울특별시 송파구 위례성대로 2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5126, lng:127.10113, icon:"☕"},
+    {name:"룸프(LOOMP)", cat:"카페", menu:"카페 · 디저트", region:"송파구 송파동", addr:"서울특별시 송파구 백제고분로41길 25", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51949, lng:127.10822, icon:"☕"},
+    {name:"79파운야드 목동41타워점", cat:"식당", menu:"한식", region:"양천구 목동", addr:"서울특별시 양천구 목동동로 293", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51721, lng:126.86702, icon:"🍚"},
+    {name:"로커피", cat:"카페", menu:"카페 · 디저트", region:"양천구 신월동", addr:"서울특별시 양천구 남부순환로59길 16", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.51541, lng:126.86376, icon:"☕"},
+    {name:"(주) 예빈당", cat:"식당", menu:"한식", region:"영등포구 여의도동", addr:"서울특별시 영등포구 여의도한강공원길 231", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53214, lng:126.8997, icon:"🍚"},
+    {name:"고양이가밟은쿠키", cat:"카페", menu:"카페 · 디저트", region:"영등포구 양평동", addr:"서울특별시 영등포구 양평로21가길 6", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.52117, lng:126.90196, icon:"☕"},
+    {name:"그라메도(GRMD)", cat:"식당", menu:"한식", region:"용산구 갈월동", addr:"서울특별시 용산구 두텁바위로1길 22", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53401, lng:126.99425, icon:"🍚"},
+    {name:"아키비스트 한남", cat:"카페", menu:"카페 · 디저트", region:"용산구 한남동", addr:"서울특별시 용산구 한남대로42길 41", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.53056, lng:126.99639, icon:"☕"},
+    {name:"213점", cat:"식당", menu:"한식", region:"은평구 응암동", addr:"서울특별시 은평구 응암로21가길 27", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5997, lng:126.92691, icon:"🍚"},
+    {name:"라온다", cat:"카페", menu:"카페 · 디저트", region:"은평구 신사동", addr:"서울특별시 은평구 증산로19길 8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.59727, lng:126.92344, icon:"☕"},
+    {name:"마그넷 케이크룸(MAGNETTT-cakeroom)", cat:"식당", menu:"카페 · 디저트", region:"종로구 내자동", addr:"서울특별시 종로구 사직로12길 1-2", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56904, lng:126.97372, icon:"☕"},
+    {name:"꼬모윤(comoyoon)", cat:"카페", menu:"카페 · 디저트", region:"종로구 계동", addr:"서울특별시 종로구 계동길 57", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.57427, lng:126.98444, icon:"☕"},
+    {name:"97.7화씨", cat:"식당", menu:"한식", region:"중구 황학동", addr:"서울특별시 중구 난계로15길 41-7", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5661, lng:127.00253, icon:"🍚"},
+    {name:"뉘앙스 서울(nuance Seoul)", cat:"카페", menu:"카페 · 디저트", region:"중구 신당동", addr:"서울특별시 중구 다산로38길 13", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.56884, lng:126.99688, icon:"☕"},
+    {name:"강릉장칼 신내역점", cat:"식당", menu:"한식", region:"중랑구 망우동", addr:"서울특별시 중랑구 용마산로 670", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.60612, lng:127.08959, icon:"🍚"},
+    {name:"꼬늘커피", cat:"카페", menu:"카페 · 디저트", region:"중랑구 상봉동", addr:"서울특별시 중랑구 동일로114길 38", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.60406, lng:127.09742, icon:"☕"},
+    {name:"(주)하이드어웨이", cat:"식당", menu:"한식", region:"제주 서귀포시 안덕면", addr:"제주특별자치도 서귀포시 안덕면 사계남로 186-8", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:33.23997, lng:126.5605, icon:"🍚"},
+    {name:"1938함덕차관", cat:"식당", menu:"한식", region:"제주 제주시 조천읍", addr:"제주특별자치도 제주시 조천읍 신북로 494", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:33.4808, lng:126.53527, icon:"🍚"},
+    {name:"개덩이네", cat:"식당", menu:"한식", region:"제주 서귀포시 안덕면", addr:"제주특별자치도 서귀포시 안덕면 평화로 486", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:33.24382, lng:126.55038, icon:"🍚"},
+    {name:"고고제주(GOGOJEJU)", cat:"식당", menu:"한식", region:"제주 제주시 한림읍", addr:"제주특별자치도 제주시 한림읍 한림로 394", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:33.51441, lng:126.52843, icon:"🍚"},
+    {name:"13월의강릉", cat:"식당", menu:"한식", region:"강원 강릉시 강문동", addr:"강원특별자치도 강릉시 해안로 292", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.74175, lng:128.86359, icon:"🍚"},
+    {name:"1637카페(cafe')", cat:"식당", menu:"카페 · 디저트", region:"강원 강릉시 주문진읍", addr:"강원특별자치도 강릉시 주문진읍 해안로 1637", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.75237, lng:128.88077, icon:"☕"},
+    {name:"감자밭카페", cat:"식당", menu:"카페 · 디저트", region:"강원 춘천시 신북읍", addr:"강원특별자치도 춘천시 신북읍 신샘밭로 674", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.89115, lng:127.73601, icon:"☕"},
+    {name:"dalpado(달파도)", cat:"식당", menu:"한식", region:"강원 양양군 손양면", addr:"강원특별자치도 양양군 손양면 선사유적로 327", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:38.05865, lng:128.63137, icon:"🍚"},
+    {name:"Moony(무니)", cat:"식당", menu:"한식", region:"부산 해운대구 우동", addr:"부산광역시 해운대구 우동1로38번길 11", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.14979, lng:129.17335, icon:"🍚"},
+    {name:"kkachi kkachi(까치까치)", cat:"식당", menu:"한식", region:"부산 서구 아미동", addr:"부산광역시 서구 옥천로 144", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.08887, lng:129.00795, icon:"🍚"},
+    {name:"no'den(노든)", cat:"식당", menu:"한식", region:"부산 수영구 광안동", addr:"부산광역시 수영구 수영로618번길 85", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.16346, lng:129.11489, icon:"🍚"},
+    {name:"가는 길에 로스터리", cat:"식당", menu:"카페 · 디저트", region:"부산 해운대구 중동", addr:"부산광역시 해운대구 좌동순환로 436", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:35.14329, lng:129.14507, icon:"☕"},
+    {name:"(주)테일즈파크", cat:"식당", menu:"한식", region:"경기 용인시 기흥구 신갈동", addr:"경기도 용인시 기흥구 신정로41번길 95-31", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.27542, lng:127.1261, icon:"🍚"},
+    {name:"(주)플루크가드니아거북섬점", cat:"식당", menu:"한식", region:"경기 시흥시 정왕동", addr:"경기도 시흥시 거북섬둘레길 10", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.39548, lng:126.79896, icon:"🍚"},
+    {name:"100 ROAD", cat:"식당", menu:"한식", region:"경기 김포시 월곶면", addr:"경기도 김포시 월곶면 월하로 96", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.60066, lng:126.70181, icon:"🍚"},
+    {name:"1번지멍닭", cat:"식당", menu:"한식", region:"경기 동두천시 생연동", addr:"경기도 동두천시 중앙로 253", phone:null, size:"전체", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.91783, lng:127.08012, icon:"🍚"}
   ];
 
-  var state = {cat:"식당", comp:"실내동반", region:"성수동", quick:null, budget:1};
+  var state = {cat:"식당", comp:"실내동반", region:"성동구 성수동", quick:null, budget:1};
   var BUDGETS = ["~1만원","~1.5만원","~2만원","~3만원","2인 이상 세트"];
 
   var favorites = {};
