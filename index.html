@@ -1,0 +1,733 @@
+<title>PETCH</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-soft:#f4f6f4;
+    --surface-soft-2:#eef1ee;
+    --ink:#14181a;
+    --muted:#666f69;
+    --muted-2:#9ca6a2;
+    --line:rgba(20,24,22,0.08);
+    --accent:#22c55e;
+    --accent-ink:#14532d;
+    --accent-soft:#e7f8ed;
+    --cream:#fceeda;
+    --cream-ink:#8a5a1c;
+    --pin:#3b82f6;
+    --outer-bg:#e7ebe6;
+    --shadow:0 1px 2px rgba(20,24,22,0.04), 0 8px 24px rgba(20,24,22,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#101312;
+      --surface:#181c1a;
+      --surface-soft:#20241f;
+      --surface-soft-2:#262b25;
+      --ink:#eef2ee;
+      --muted:#a7b0aa;
+      --muted-2:#7d857f;
+      --line:rgba(255,255,255,0.08);
+      --accent:#34d174;
+      --accent-ink:#c8f5d8;
+      --accent-soft:#173424;
+      --cream:#3a301f;
+      --cream-ink:#f0cf9a;
+      --pin:#5b9bff;
+      --outer-bg:#0a0c0b;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101312;
+    --surface:#181c1a;
+    --surface-soft:#20241f;
+    --surface-soft-2:#262b25;
+    --ink:#eef2ee;
+    --muted:#a7b0aa;
+    --muted-2:#7d857f;
+    --line:rgba(255,255,255,0.08);
+    --accent:#34d174;
+    --accent-ink:#c8f5d8;
+    --accent-soft:#173424;
+    --cream:#3a301f;
+    --cream-ink:#f0cf9a;
+    --pin:#5b9bff;
+    --outer-bg:#0a0c0b;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  html{background:var(--outer-bg);}
+  body{
+    background:var(--outer-bg);
+    color:var(--ink);
+    font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","SUIT",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    display:flex;
+    justify-content:center;
+  }
+  /* mobile app-frame shell: fixed to viewport height and scrolls internally,
+     so on a real phone it fills the screen, and on a wider screen it reads
+     as a phone-sized app window centered on a neutral backdrop */
+  .app-shell{
+    width:100%;
+    max-width:430px;
+    height:100vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    background:var(--bg);
+    position:relative;
+  }
+  @media (min-width:480px){
+    body{padding-block:28px;}
+    .app-shell{height:calc(100vh - 56px);border-radius:22px;box-shadow:0 0 0 1px var(--line), var(--shadow);}
+  }
+  .wrap{max-width:100%;margin:0 auto;padding:0 20px;}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select{font-family:inherit;}
+  button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px;
+  }
+
+  /* header */
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:20;}
+  .header-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;}
+  .brand{display:flex;flex-direction:column;gap:2px;}
+  .brand-mark{display:flex;align-items:center;gap:6px;font-weight:900;font-size:22px;letter-spacing:-0.02em;}
+  .brand-mark svg{flex:none;}
+  .brand-tag{font-size:11.5px;color:var(--muted-2);letter-spacing:0.02em;}
+  .header-actions{display:flex;align-items:center;gap:8px;flex:none;}
+  .loc-pill{display:flex;align-items:center;gap:5px;background:none;border:none;color:var(--muted);font-size:12.5px;text-align:right;line-height:1.25;padding:6px 4px;max-width:92px;}
+  .loc-pill svg{flex:none;color:var(--accent);}
+  .login-btn{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px 18px;font-weight:700;font-size:13px;white-space:nowrap;}
+  .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;flex:none;}
+
+  /* hero */
+  .hero{padding:36px 0 20px;}
+  .hero-kicker{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;color:var(--ink);flex-wrap:wrap;}
+  .hero-kicker .badge{background:var(--accent);color:#06210f;font-weight:900;font-style:italic;letter-spacing:-0.01em;padding:4px 10px;border-radius:8px;font-size:16px;}
+  .hero-h1{font-size:28px;font-weight:900;letter-spacing:-0.02em;margin:10px 0 8px;text-wrap:balance;}
+  .hero-sub{color:var(--muted);font-size:14.5px;margin:0;}
+
+  .chip-row{display:flex;gap:8px;overflow-x:auto;padding:18px 0 4px;scrollbar-width:none;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{flex:none;display:flex;align-items:center;gap:6px;background:var(--surface-soft);border:none;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--ink);}
+
+  /* filter card */
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:18px;box-shadow:var(--shadow);}
+  .seg{display:flex;background:var(--surface-soft);border-radius:16px;padding:4px;gap:4px;}
+  .seg button{flex:1;border:none;background:none;border-radius:12px;padding:12px 10px;font-weight:800;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;}
+  .seg button.active{background:var(--ink);color:var(--bg);}
+  .hint{font-size:12px;color:var(--muted-2);margin:10px 2px 0;line-height:1.5;}
+
+  .field{margin-top:22px;}
+  .field-label{font-size:13.5px;font-weight:800;margin:0 0 10px 2px;}
+  .loc-input-row{display:flex;gap:8px;}
+  .text-input{flex:1;background:var(--surface-soft);border:none;border-radius:12px;padding:13px 14px;font-size:14px;color:var(--ink);min-width:0;}
+  .text-input::placeholder{color:var(--muted-2);}
+  .search-btn{background:var(--ink);color:var(--bg);border:none;border-radius:12px;padding:0 20px;font-weight:800;font-size:14px;white-space:nowrap;}
+
+  .stepper{display:flex;align-items:center;justify-content:space-between;background:var(--surface-soft);border-radius:14px;padding:14px 18px;}
+  .stepper button{background:none;border:none;color:var(--ink);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .stepper button:hover{background:var(--surface-soft-2);}
+  .stepper .val{font-weight:800;font-size:16px;}
+
+  .select-wrap{position:relative;}
+  select.text-input{appearance:none;-webkit-appearance:none;padding-right:38px;width:100%;}
+  .select-wrap::after{content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;border-right:2px solid var(--muted-2);border-bottom:2px solid var(--muted-2);transform:translateY(-70%) rotate(45deg);pointer-events:none;}
+
+  .check-list{display:flex;flex-direction:column;gap:12px;}
+  .check-row{display:flex;align-items:center;gap:10px;font-size:14.5px;}
+  .check-row input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent);border-radius:6px;flex:none;}
+
+  .menu-row{display:flex;gap:10px;align-items:center;}
+  .menu-row select{flex:1;}
+  .care-toggle{flex:none;display:flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:12px 14px;font-weight:800;font-size:13px;white-space:nowrap;}
+  .care-toggle input{width:18px;height:18px;accent-color:var(--accent);}
+
+  .cta{width:100%;margin-top:24px;background:var(--ink);color:var(--bg);border:none;border-radius:16px;padding:18px;font-weight:900;font-size:16px;letter-spacing:0.04em;font-style:italic;}
+  .cta:active{transform:translateY(1px);}
+
+  /* ranking */
+  .section-title{font-size:19px;font-weight:900;margin:44px 0 4px;letter-spacing:-0.01em;}
+  .section-sub{font-size:12.5px;color:var(--muted-2);margin:0 0 16px;}
+  .rank-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden;}
+  .rank-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);}
+  .rank-item + .rank-item{border-top:1px solid var(--line);}
+  .rank-num{flex:none;width:22px;font-weight:900;font-size:15px;color:var(--muted-2);}
+  .rank-item:nth-child(-n+3) .rank-num{color:var(--accent);}
+  .rank-body{flex:1;min-width:0;}
+  .rank-name{font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .rank-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+  .rank-tag{flex:none;font-size:11px;font-weight:800;background:var(--surface-soft);color:var(--muted);border-radius:999px;padding:5px 10px;}
+
+  footer{margin-top:52px;border-top:1px solid var(--line);}
+  .footer-row{padding:24px 0 40px;font-size:12px;color:var(--muted-2);display:flex;flex-direction:column;gap:6px;}
+  .footer-brand{font-weight:800;color:var(--muted);}
+
+  /* modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,13,11,0.55);display:flex;align-items:flex-end;justify-content:center;z-index:100;}
+  .modal-overlay[hidden]{display:none;}
+  .modal{background:var(--bg);width:100%;max-width:430px;max-height:92vh;border-radius:24px 24px 0 0;overflow:auto;padding:22px 20px 28px;}
+  @media (min-width:480px){
+    .modal-overlay{align-items:center;}
+    .modal{border-radius:24px;max-height:86vh;}
+  }
+  .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .modal-title{font-size:20px;font-weight:900;margin:0;}
+  .modal-close{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;}
+  .view-tabs{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:none;}
+  .view-tabs::-webkit-scrollbar{display:none;}
+  .view-tabs button{flex:none;border:none;background:var(--surface-soft);color:var(--muted);border-radius:999px;padding:9px 14px;font-weight:800;font-size:12.5px;}
+  .view-tabs button.active{background:var(--ink);color:var(--bg);}
+
+  .map-box{margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface-soft);position:relative;}
+  .map-box svg{display:block;width:100%;height:200px;}
+  .map-caption{position:absolute;left:10px;bottom:8px;background:rgba(255,255,255,0.85);color:var(--muted);font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;}
+  :root[data-theme="dark"] .map-caption{background:rgba(20,24,22,0.75);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .map-caption{background:rgba(20,24,22,0.75);}}
+  .map-bg{fill:var(--surface-soft);}
+  .map-land{fill:var(--surface-soft-2);}
+  .map-grid{stroke:var(--line);stroke-width:1;}
+  .map-pin{fill:var(--pin);stroke:var(--surface);stroke-width:1.5;}
+  .map-pin-first{fill:var(--accent);}
+  .map-pin-dot{fill:var(--surface);}
+  .map-empty-text{fill:var(--muted-2);font-size:13px;font-weight:700;}
+
+  .result-meta{font-size:13px;color:var(--muted);margin:14px 2px 12px;}
+  .result-list{display:flex;flex-direction:column;gap:14px;}
+  .result-empty{padding:36px 12px;text-align:center;color:var(--muted);font-size:14px;background:var(--surface-soft);border-radius:16px;}
+  .card{background:var(--surface-soft);border-radius:18px;padding:18px;}
+  .card-top{display:flex;align-items:center;gap:10px;}
+  .card-icon{width:42px;height:42px;border-radius:12px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:19px;flex:none;}
+  .fav-btn{width:34px;height:34px;border-radius:50%;background:var(--surface);border:none;color:var(--muted-2);display:flex;align-items:center;justify-content:center;flex:none;}
+  .fav-btn.on{color:#f2b100;}
+  .dist-pill{margin-left:auto;background:var(--accent);color:#06210f;font-weight:800;font-size:12.5px;padding:6px 12px;border-radius:999px;flex:none;}
+  .card-name{font-weight:800;font-size:16px;margin:14px 0 2px;}
+  .card-cat{font-size:12.5px;color:var(--muted);}
+  .card-addr{font-size:12.5px;color:var(--muted);margin-top:8px;}
+  .card-phone{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .mini-tag{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:4px 9px;}
+  .card-actions{display:flex;gap:8px;margin-top:14px;}
+  .card-actions a,.card-actions button{flex:1;text-align:center;border-radius:12px;padding:12px 10px;font-weight:800;font-size:12.5px;border:none;text-decoration:none;}
+  .btn-dark{background:var(--ink);color:var(--bg);}
+  .btn-outline{background:var(--surface);border:1px solid var(--line) !important;color:var(--ink);}
+
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:700;box-shadow:var(--shadow);z-index:200;opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;animation:none !important;}
+  }
+</style>
+
+<div class="app-shell" id="appShell">
+<header>
+  <div class="wrap header-row">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 14.2c-3.6 0-6.8 2-6.8 5 0 1.7 1.6 2.8 3.4 2.4 1.1-.3 2.2-.5 3.4-.5s2.3.2 3.4.5c1.8.4 3.4-.7 3.4-2.4 0-3-3.2-5-6.8-5Z" fill="currentColor"/><circle cx="5.2" cy="10.4" r="2.4" fill="currentColor"/><circle cx="18.8" cy="10.4" r="2.4" fill="currentColor"/><circle cx="9.2" cy="5.6" r="2.1" fill="currentColor"/><circle cx="14.8" cy="5.6" r="2.1" fill="currentColor"/></svg>
+        PETCH
+      </div>
+      <div class="brand-tag">Pet-Friendly Dining Finder</div>
+    </div>
+    <div class="header-actions">
+      <button class="loc-pill" id="locPillBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.1 7-12A7 7 0 0 0 5 10c0 5.9 7 12 7 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
+        <span id="locLabel">서울 성동구<br/>성수동</span>
+      </button>
+      <button class="login-btn" id="loginBtn">로그인</button>
+      <button class="icon-btn" id="favShortcutBtn" aria-label="즐겨찾기 목록">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 17.3 6.2 21l1.5-6.5L2.5 9.9l6.7-.6L12 3l2.8 6.3 6.7.6-5.2 4.6L18 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-kicker">우리 아이와 외식은 <span class="badge">PETCH</span></div>
+    <h1 class="hero-h1">오늘도 반려동반 맛집 추천</h1>
+    <p class="hero-sub">리뷰 태그 데이터로 찾는 우리 동네 반려동반 식당·카페</p>
+
+    <div class="chip-row">
+      <button class="chip" type="button" data-quick="fav">⭐ 나의 즐겨찾기</button>
+      <button class="chip" type="button" data-quick="large">🐕 대형견도 OK</button>
+      <button class="chip" type="button" data-quick="cafeOnly">☕ 카페만 보기</button>
+      <button class="chip" type="button" data-quick="terrace">🌿 야외 테라스</button>
+    </div>
+  </section>
+
+  <form class="panel" id="filterForm">
+    <div class="seg" role="tablist" aria-label="장소 유형">
+      <button type="button" class="active" data-cat="식당" id="segFood">🍚 식당</button>
+      <button type="button" data-cat="카페" id="segCafe">🐾 카페</button>
+    </div>
+
+    <div class="field">
+      <p class="field-label">찾는 지역</p>
+      <div class="loc-input-row">
+        <input class="text-input" id="regionInput" type="text" value="성수동" placeholder="예: 강남구, 연남동" />
+        <button class="search-btn" type="button" id="regionSearchBtn">검색</button>
+      </div>
+      <p class="hint">가게 정보는 방문자 제보와 리뷰 태그 기반이에요 — 최신 동반 가능 여부는 매장에 확인해주세요.</p>
+    </div>
+
+    <div class="field">
+      <p class="field-label">동반 형태</p>
+      <div class="seg" role="tablist" aria-label="동반 형태">
+        <button type="button" class="active" data-comp="실내동반">실내 동반</button>
+        <button type="button" data-comp="야외동반">야외 동반만</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="field-label">예산 (1인당)</p>
+      <div class="stepper">
+        <button type="button" id="budgetDown" aria-label="예산 낮추기">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6 9 12l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="val" id="budgetVal">~1.5만원</span>
+        <button type="button" id="budgetUp" aria-label="예산 올리기">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="field-label">반려동물 크기</p>
+      <div class="select-wrap">
+        <select class="text-input" id="petSizeSelect">
+          <option value="전체">전체 크기 환영</option>
+          <option value="소형견">소형견까지 (~7kg)</option>
+          <option value="중형견">중형견까지 (~15kg)</option>
+          <option value="대형견">대형견도 가능</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="field-label">동반 가능 동물</p>
+      <div class="select-wrap">
+        <select class="text-input" id="animalSelect">
+          <option value="전체">강아지 · 고양이 모두</option>
+          <option value="강아지">강아지만</option>
+          <option value="고양이">고양이만</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="field-label">추가 조건</p>
+      <div class="check-list">
+        <label class="check-row"><input type="checkbox" id="chkTerrace" /> 야외 테라스가 있어요</label>
+        <label class="check-row"><input type="checkbox" id="chkPlay" /> 놀이공간이 있어요</label>
+        <label class="check-row"><input type="checkbox" id="chkBag" /> 배변봉투를 제공해요</label>
+        <label class="check-row"><input type="checkbox" id="chkParking" /> 주차장이 필요해요</label>
+      </div>
+      <p class="hint">테라스·놀이공간 태그는 PETCH 이용자가 직접 남긴 정보예요. 아직 데이터가 적을 수 있어요.</p>
+    </div>
+
+    <div class="field">
+      <p class="field-label">메뉴 종류</p>
+      <div class="menu-row">
+        <div class="select-wrap" style="flex:1;">
+          <select class="text-input" id="menuSelect" disabled>
+            <option>한식</option>
+            <option>양식</option>
+            <option>카페 · 디저트</option>
+            <option>브런치</option>
+            <option>고기 · 술집</option>
+          </select>
+        </div>
+        <label class="care-toggle">
+          <input type="checkbox" id="menuAny" checked /> 상관없어요
+        </label>
+      </div>
+    </div>
+
+    <button class="cta" type="submit" id="ctaBtn">PETCH TODAY</button>
+  </form>
+
+  <h2 class="section-title">지금 반려인들이 많이 찾는 곳</h2>
+  <p class="section-sub">※ 아래 순위는 예시 데이터예요. 실제 이용 데이터가 쌓이면 실시간 순위로 교체할게요.</p>
+  <div class="rank-list" id="rankList"></div>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div class="footer-brand">PETCH · 우리 아이와 함께하는 외식은 PET!</div>
+      <div>본 사이트의 반려동반 가능 여부·편의시설 정보는 예시 데이터이며, 실제 서비스에서는 사용자 제보와 리뷰로 채워집니다.</div>
+      <div>방문 전 매장에 반려동물 동반 가능 여부를 다시 한번 확인해주세요.</div>
+    </div>
+  </footer>
+</main>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h3 class="modal-title" id="modalTitle">오늘의 반려동반 추천</h3>
+      <button class="modal-close" id="modalCloseBtn" aria-label="닫기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="view-tabs" role="tablist">
+      <button type="button" class="active" data-view="exclude">카페 제외</button>
+      <button type="button" data-view="with">카페 함께 보기</button>
+      <button type="button" data-view="only">카페만 보기</button>
+    </div>
+    <div class="map-box">
+      <svg id="mapSvg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="검색 결과 위치 지도"></svg>
+      <span class="map-caption">지도는 예시 이미지예요</span>
+    </div>
+    <p class="result-meta" id="resultMeta"></p>
+    <div class="result-list" id="resultList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var PLACES = [
+    {name:"성수 마당집", cat:"식당", menu:"한식", region:"성동구 성수동", addr:"서울 성동구 성수이로 12길 8", phone:"02-467-1023", size:"대형견", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:false, parking:true, lat:37.5445, lng:127.0565, icon:"🍚"},
+    {name:"도그하우스 브런치", cat:"카페", menu:"브런치", region:"마포구 연남동", addr:"서울 마포구 성미산로 29", phone:"02-332-8841", size:"전체", animal:"강아지", comp:"실내동반", terrace:false, play:true, bag:true, parking:false, lat:37.5615, lng:126.9257, icon:"🥐"},
+    {name:"발자국 파스타", cat:"식당", menu:"양식", region:"용산구 이태원동", addr:"서울 용산구 이태원로 45길 6", phone:"02-749-2210", size:"중형견", animal:"강아지", comp:"실내동반", terrace:true, play:false, bag:false, parking:false, lat:37.5346, lng:126.9946, icon:"🍝"},
+    {name:"멍냥정원 카페", cat:"카페", menu:"카페 · 디저트", region:"서초구 방배동", addr:"서울 서초구 동광로 34", phone:"02-521-7789", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.4818, lng:126.9926, icon:"🐾"},
+    {name:"산책 끝 냉면집", cat:"식당", menu:"한식", region:"강남구 압구정동", addr:"서울 강남구 압구정로 20길 11", phone:"02-548-3302", size:"소형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:false, parking:false, lat:37.5274, lng:127.0287, icon:"🍜"},
+    {name:"캣초코 디저트", cat:"카페", menu:"카페 · 디저트", region:"종로구 익선동", addr:"서울 종로구 수표로 28길 4", phone:"02-765-9012", size:"전체", animal:"고양이", comp:"실내동반", terrace:false, play:true, bag:false, parking:false, lat:37.5731, lng:126.9910, icon:"🐈"},
+    {name:"한강뷰 숯불집", cat:"식당", menu:"고기 · 술집", region:"영등포구 여의도동", addr:"서울 영등포구 여의동로 330", phone:"02-782-4410", size:"대형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:true, parking:true, lat:37.5260, lng:126.9243, icon:"🍖"},
+    {name:"포레스트 브런치하우스", cat:"카페", menu:"브런치", region:"성동구 서울숲", addr:"서울 성동구 서울숲2길 44", phone:"02-465-6620", size:"대형견", animal:"전체", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.5443, lng:127.0374, icon:"🥐"},
+    {name:"우동한그릇", cat:"식당", menu:"양식", region:"마포구 합정동", addr:"서울 마포구 양화로 45", phone:"02-323-1188", size:"소형견", animal:"강아지", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5497, lng:126.9139, icon:"🍜"},
+    {name:"댕댕베이커리 카페", cat:"카페", menu:"카페 · 디저트", region:"송파구 방이동", addr:"서울 송파구 백제고분로 45길 9", phone:"02-403-7745", size:"전체", animal:"강아지", comp:"실내동반", terrace:true, play:true, bag:true, parking:true, lat:37.5111, lng:127.1128, icon:"🧁"},
+    {name:"연희동 파스타공방", cat:"식당", menu:"양식", region:"서대문구 연희동", addr:"서울 서대문구 연희로 22길 15", phone:"02-338-5567", size:"중형견", animal:"전체", comp:"실내동반", terrace:false, play:false, bag:false, parking:false, lat:37.5665, lng:126.9346, icon:"🍝"},
+    {name:"양지말화로구이", cat:"식당", menu:"고기 · 술집", region:"강남구 논현동", addr:"서울 강남구 논현로 15길 8", phone:"02-544-9091", size:"소형견", animal:"강아지", comp:"야외동반", terrace:true, play:false, bag:false, parking:true, lat:37.5108, lng:127.0293, icon:"🍖"},
+    {name:"티하우스 마루", cat:"카페", menu:"카페 · 디저트", region:"종로구 삼청동", addr:"서울 종로구 삼청로 9길 3", phone:"02-733-2201", size:"전체", animal:"전체", comp:"실내동반", terrace:true, play:false, bag:true, parking:false, lat:37.5826, lng:126.9819, icon:"🍵"},
+    {name:"소소식당", cat:"식당", menu:"한식", region:"강동구 천호동", addr:"서울 강동구 천호대로 1097", phone:"02-488-3021", size:"중형견", animal:"강아지", comp:"실내동반", terrace:false, play:true, bag:false, parking:true, lat:37.5384, lng:127.1237, icon:"🍚"}
+  ];
+
+  var state = {cat:"식당", comp:"실내동반", region:"성수동", quick:null, budget:1};
+  var BUDGETS = ["~1만원","~1.5만원","~2만원","~3만원","2인 이상 세트"];
+
+  var favorites = {};
+  try{
+    var raw = localStorage.getItem("petch_favorites");
+    if(raw) favorites = JSON.parse(raw) || {};
+  }catch(e){ favorites = {}; }
+  function saveFavorites(){
+    try{ localStorage.setItem("petch_favorites", JSON.stringify(favorites)); }catch(e){}
+  }
+
+  function $(sel){ return document.querySelector(sel); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+
+  function showToast(msg){
+    var t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._tm);
+    showToast._tm = setTimeout(function(){ t.classList.remove("show"); }, 1800);
+  }
+
+  /* segment: 식당/카페 */
+  $("#segFood").addEventListener("click", function(){ setCat("식당"); });
+  $("#segCafe").addEventListener("click", function(){ setCat("카페"); });
+  function setCat(cat){
+    state.cat = cat;
+    $("#segFood").classList.toggle("active", cat === "식당");
+    $("#segCafe").classList.toggle("active", cat === "카페");
+    var menuSel = $("#menuSelect");
+    if(cat === "카페"){ menuSel.value = "카페 · 디저트"; }
+  }
+
+  /* segment: 동반 형태 */
+  $all('[data-comp]').forEach(function(btn){
+    btn.addEventListener("click", function(){
+      state.comp = btn.getAttribute("data-comp");
+      $all('[data-comp]').forEach(function(b){ b.classList.toggle("active", b === btn); });
+    });
+  });
+
+  /* budget stepper */
+  function renderBudget(){ $("#budgetVal").textContent = BUDGETS[state.budget]; }
+  $("#budgetDown").addEventListener("click", function(){ state.budget = Math.max(0, state.budget - 1); renderBudget(); });
+  $("#budgetUp").addEventListener("click", function(){ state.budget = Math.min(BUDGETS.length - 1, state.budget + 1); renderBudget(); });
+  renderBudget();
+
+  /* menu select enable toggle */
+  $("#menuAny").addEventListener("change", function(){
+    $("#menuSelect").disabled = this.checked;
+  });
+
+  /* region search (inline, just updates label) */
+  $("#regionSearchBtn").addEventListener("click", function(){
+    var v = $("#regionInput").value.trim();
+    if(!v){ showToast("지역을 입력해주세요"); return; }
+    state.region = v;
+    $("#locLabel").innerHTML = escapeHtml(v).replace(/ /g, "<br/>");
+    showToast(v + " 근처로 지역을 설정했어요");
+  });
+
+  /* quick chips */
+  $all(".chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      var q = chip.getAttribute("data-quick");
+      state.quick = (state.quick === q) ? null : q;
+      $all(".chip").forEach(function(c){
+        c.style.background = (c.getAttribute("data-quick") === state.quick) ? "var(--ink)" : "";
+        c.style.color = (c.getAttribute("data-quick") === state.quick) ? "var(--bg)" : "";
+      });
+      if(q === "fav"){ openModal("with", true); }
+      else{ runSearch(); }
+    });
+  });
+
+  $("#loginBtn").addEventListener("click", function(){ showToast("데모 버전이에요 — 로그인 없이 둘러볼 수 있어요"); });
+  $("#locPillBtn").addEventListener("click", function(){ $("#regionInput").focus(); });
+  $("#favShortcutBtn").addEventListener("click", function(){ openModal("with", true); });
+
+  /* form submit -> open modal with results */
+  $("#filterForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    runSearch();
+  });
+
+  function runSearch(){
+    var view = state.cat === "카페" ? "only" : "exclude";
+    openModal(view, state.quick === "fav");
+  }
+
+  /* modal */
+  var modalState = {view:"exclude", favOnly:false};
+  function openModal(view, favOnly){
+    modalState.view = view || "exclude";
+    modalState.favOnly = !!favOnly;
+    $all("[data-view]").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-view") === modalState.view); });
+    $("#modalTitle").textContent = modalState.favOnly ? "나의 즐겨찾기" : "오늘의 반려동반 추천";
+    $("#modalOverlay").hidden = false;
+    $("#appShell").style.overflow = "hidden";
+    renderResults();
+  }
+  function closeModal(){
+    $("#modalOverlay").hidden = true;
+    $("#appShell").style.overflow = "";
+  }
+  $("#modalCloseBtn").addEventListener("click", closeModal);
+  $("#modalOverlay").addEventListener("click", function(e){ if(e.target === this) closeModal(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !$("#modalOverlay").hidden) closeModal(); });
+
+  $all("[data-view]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      modalState.view = btn.getAttribute("data-view");
+      $all("[data-view]").forEach(function(b){ b.classList.toggle("active", b === btn); });
+      renderResults();
+    });
+  });
+
+  function getFilters(){
+    return {
+      region: $("#regionInput").value.trim(),
+      comp: state.comp,
+      petSize: $("#petSizeSelect").value,
+      animal: $("#animalSelect").value,
+      terrace: $("#chkTerrace").checked,
+      play: $("#chkPlay").checked,
+      bag: $("#chkBag").checked,
+      parking: $("#chkParking").checked,
+      menuAny: $("#menuAny").checked,
+      menu: $("#menuSelect").value,
+      quick: state.quick
+    };
+  }
+
+  var SIZE_ORDER = {"소형견":1,"중형견":2,"대형견":3,"전체":0};
+  function matches(p, f, view, favOnly){
+    if(favOnly) return !!favorites[p.name];
+    if(view === "exclude" && p.cat === "카페") return false;
+    if(view === "only" && p.cat !== "카페") return false;
+    if(f.region && p.region.indexOf(f.region) === -1 && f.region !== "") {
+      // loose match: allow region search on gu/dong substrings both ways
+      if(!(p.region.indexOf(f.region.replace(/\s/g,"")) !== -1)) {
+        if(f.region.length >= 2 && p.region.indexOf(f.region.slice(0,2)) === -1) return false;
+      }
+    }
+    if(f.comp === "야외동반" && p.comp === "실내동반") { /* indoor places still fine outdoors too */ }
+    if(f.petSize !== "전체" && p.size !== "전체" && SIZE_ORDER[p.size] < SIZE_ORDER[f.petSize]) return false;
+    if(f.animal !== "전체" && p.animal !== "전체" && p.animal !== f.animal) return false;
+    if(f.terrace && !p.terrace) return false;
+    if(f.play && !p.play) return false;
+    if(f.bag && !p.bag) return false;
+    if(f.parking && !p.parking) return false;
+    if(!f.menuAny && p.menu !== f.menu) return false;
+    if(f.quick === "large" && p.size !== "대형견" && p.size !== "전체") return false;
+    if(f.quick === "cafeOnly" && p.cat !== "카페") return false;
+    if(f.quick === "terrace" && !p.terrace) return false;
+    return true;
+  }
+
+  function distanceLabel(i){
+    var vals = ["150m","320m","480m","620m","750m","890m","1.1km","1.3km"];
+    return vals[i % vals.length];
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function renderResults(){
+    var f = getFilters();
+    var list = PLACES.filter(function(p){ return matches(p, f, modalState.view, modalState.favOnly); });
+
+    $("#resultMeta").textContent = (f.region || "서울") + " 기준 · " + list.length + "곳";
+
+    var wrap = $("#resultList");
+    if(list.length === 0){
+      wrap.innerHTML = '<div class="result-empty">조건에 맞는 곳을 아직 찾지 못했어요.<br/>조건을 조금 완화해보세요.</div>';
+    } else {
+      wrap.innerHTML = list.map(function(p, i){
+        var tags = [];
+        if(p.terrace) tags.push("야외테라스");
+        if(p.play) tags.push("놀이공간");
+        if(p.bag) tags.push("배변봉투 제공");
+        if(p.parking) tags.push("주차장");
+        var isFav = !!favorites[p.name];
+        var mapQ = encodeURIComponent(p.name + " " + p.region);
+        return (
+          '<div class="card" data-name="' + escapeHtml(p.name) + '">' +
+            '<div class="card-top">' +
+              '<div class="card-icon">' + p.icon + '</div>' +
+              '<button type="button" class="fav-btn' + (isFav ? ' on' : '') + '" data-fav="' + escapeHtml(p.name) + '" aria-label="즐겨찾기">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '"><path d="M12 17.3 6.2 21l1.5-6.5L2.5 9.9l6.7-.6L12 3l2.8 6.3 6.7.6-5.2 4.6L18 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' +
+              '</button>' +
+              '<span class="dist-pill">' + distanceLabel(i) + '</span>' +
+            '</div>' +
+            '<div class="card-name">' + escapeHtml(p.name) + '</div>' +
+            '<div class="card-cat">' + escapeHtml(p.cat) + ' · ' + escapeHtml(p.menu) + ' · ' + escapeHtml(p.region) + '</div>' +
+            '<div class="card-addr">' + escapeHtml(p.addr) + '</div>' +
+            '<div class="card-phone">' + escapeHtml(p.phone || "전화번호 정보 없음") + '</div>' +
+            (tags.length ? '<div class="tag-row">' + tags.map(function(t){ return '<span class="mini-tag">' + t + '</span>'; }).join("") + '</div>' : '') +
+            '<div class="card-actions">' +
+              '<a class="btn-dark" href="https://map.kakao.com/link/search/' + mapQ + '" target="_blank" rel="noopener">지도에서 보기</a>' +
+              '<button type="button" class="btn-outline" data-info="' + escapeHtml(p.name) + '">정보 추가</button>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join("");
+    }
+
+    $all("[data-fav]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var name = btn.getAttribute("data-fav");
+        favorites[name] = !favorites[name];
+        if(!favorites[name]) delete favorites[name];
+        saveFavorites();
+        renderResults();
+      });
+    });
+    $all("[data-info]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        showToast("실제 서비스에서는 이용자가 직접 정보를 추가할 수 있어요");
+      });
+    });
+
+    renderMap(list);
+  }
+
+  function renderMap(list){
+    var svg = $("#mapSvg");
+    var pts = list.slice(0, 8);
+    var W = 400, H = 200, PAD = 34;
+    var svgns = "http://www.w3.org/2000/svg";
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    function rect(x,y,w,h,cls){
+      var r = document.createElementNS(svgns,"rect");
+      r.setAttribute("x",x); r.setAttribute("y",y); r.setAttribute("width",w); r.setAttribute("height",h);
+      r.setAttribute("rx", 18); r.setAttribute("class", cls);
+      svg.appendChild(r);
+    }
+    // base + soft "land" blocks to suggest a schematic map without real tiles
+    rect(0,0,W,H,"map-bg");
+    rect(-20,110,220,110,"map-land");
+    rect(240,-20,220,120,"map-land");
+    rect(120,150,220,90,"map-land");
+
+    // faint grid lines (streets)
+    for(var gx=40; gx<W; gx+=64){
+      var l1 = document.createElementNS(svgns,"line");
+      l1.setAttribute("x1",gx); l1.setAttribute("y1",0); l1.setAttribute("x2",gx); l1.setAttribute("y2",H);
+      l1.setAttribute("class","map-grid");
+      svg.appendChild(l1);
+    }
+    for(var gy=30; gy<H; gy+=48){
+      var l2 = document.createElementNS(svgns,"line");
+      l2.setAttribute("x1",0); l2.setAttribute("y1",gy); l2.setAttribute("x2",W); l2.setAttribute("y2",gy);
+      l2.setAttribute("class","map-grid");
+      svg.appendChild(l2);
+    }
+
+    if(pts.length === 0){
+      var txt = document.createElementNS(svgns,"text");
+      txt.setAttribute("x", W/2); txt.setAttribute("y", H/2);
+      txt.setAttribute("text-anchor","middle"); txt.setAttribute("class","map-empty-text");
+      txt.textContent = "표시할 위치가 없어요";
+      svg.appendChild(txt);
+      return;
+    }
+
+    var lats = pts.map(function(p){return p.lat;});
+    var lngs = pts.map(function(p){return p.lng;});
+    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
+    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
+    var latSpan = Math.max(maxLat - minLat, 0.01);
+    var lngSpan = Math.max(maxLng - minLng, 0.01);
+
+    pts.forEach(function(p, i){
+      var nx = (p.lng - minLng) / lngSpan;
+      var ny = (p.lat - minLat) / latSpan;
+      var x = PAD + nx * (W - PAD*2);
+      var y = (H - PAD) - ny * (H - PAD*2);
+
+      var g = document.createElementNS(svgns,"g");
+      g.setAttribute("transform", "translate(" + x + "," + y + ")");
+
+      var pin = document.createElementNS(svgns,"path");
+      pin.setAttribute("d","M0 -20c-7 0-12 5.2-12 12.2C-12 -0.6 0 12 0 12s12-12.6 12-19.8C12-14.8 7-20 0-20Z");
+      pin.setAttribute("class", i === 0 ? "map-pin map-pin-first" : "map-pin");
+      g.appendChild(pin);
+
+      var dot = document.createElementNS(svgns,"circle");
+      dot.setAttribute("cx",0); dot.setAttribute("cy",-11.5); dot.setAttribute("r",4.2);
+      dot.setAttribute("class","map-pin-dot");
+      g.appendChild(dot);
+
+      svg.appendChild(g);
+    });
+  }
+
+  /* ranking list */
+  var RANK = PLACES.slice(0, 5);
+  $("#rankList").innerHTML = RANK.map(function(p, i){
+    return (
+      '<div class="rank-item">' +
+        '<div class="rank-num">' + (i+1) + '</div>' +
+        '<div class="rank-body">' +
+          '<div class="rank-name">' + escapeHtml(p.name) + '</div>' +
+          '<div class="rank-meta">' + escapeHtml(p.region) + ' · ' + escapeHtml(p.menu) + '</div>' +
+        '</div>' +
+        '<span class="rank-tag">' + (p.cat === "카페" ? "☕ 카페" : "🍚 식당") + '</span>' +
+      '</div>'
+    );
+  }).join("");
+
+})();
+</script>
